@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
-import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
-import 'package:taskify_app/core/constants/app_ui.dart';
-import 'package:taskify_app/router/routes/app_routes.dart';
+
+import '../../../../constants/app_colors.dart';
+import '../../../../constants/app_spacing.dart';
+import '../../../../constants/app_typography.dart';
+import '../../../../constants/app_ui.dart';
+import '../../../../widget/app_components.dart';
+import '../../../../../router/routes/app_routes.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -50,13 +52,7 @@ class LoginScreen extends StatelessWidget {
             child: Center(
               child: SingleChildScrollView(
                 padding: AppSpacing.screenPadding,
-                child: Container(
-                  padding: AppSpacing.cardPadding,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppUi.cardRadius),
-                    boxShadow: const [AppUi.cardShadow],
-                  ),
+                child: AppCard(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,33 +74,16 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xs),
                       const Text('Sign in to continue', style: AppTypography.bodyLarge),
                       const SizedBox(height: AppSpacing.xl),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Email address',
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                      const AppTextField(
+                        hintText: 'Email address',
+                        prefixIcon: Icon(Icons.email_outlined),
+                        keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_outline_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                      const AppPasswordField(
+                        hintText: 'Password',
                       ),
-                      const SizedBox(height: AppSpacing.md),
+                      const SizedBox(height: AppSpacing.xs),
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -113,26 +92,16 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: AppSpacing.xs),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding: AppSpacing.buttonPadding,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                            ),
-                          ),
-                          child: const Text('Sign In', style: AppTypography.buttonText),
-                        ),
+                      AppButton(
+                        text: 'Sign In',
+                        useGradient: true,
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                        },
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -142,21 +111,10 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.g_mobiledata_rounded),
-                          label: const Text('Continue with Google', style: AppTypography.buttonText),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppColors.textPrimary,
-                            padding: AppSpacing.smallButtonPadding,
-                            side: const BorderSide(color: AppColors.surfaceVariant),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                            ),
-                          ),
-                        ),
+                      AppOutlineButton(
+                        text: 'Continue with Google',
+                        icon: Icons.g_mobiledata_rounded,
+                        onPressed: () {},
                       ),
                       const SizedBox(height: 20),
                       Row(

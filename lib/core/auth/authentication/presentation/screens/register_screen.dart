@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
-import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
-import 'package:taskify_app/core/constants/app_ui.dart';
-import 'package:taskify_app/router/routes/app_routes.dart';
+
+import '../../../../constants/app_colors.dart';
+import '../../../../constants/app_spacing.dart';
+import '../../../../constants/app_typography.dart';
+import '../../../../constants/app_ui.dart';
+import '../../../../widget/app_components.dart';
+import '../../../../../router/routes/app_routes.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -50,13 +52,7 @@ class RegisterScreen extends StatelessWidget {
             child: Center(
               child: SingleChildScrollView(
                 padding: AppSpacing.screenPadding,
-                child: Container(
-                  padding: AppSpacing.cardPadding,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppUi.cardRadius),
-                    boxShadow: const [AppUi.cardShadow],
-                  ),
+                child: AppCard(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,76 +74,31 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xs),
                       const Text('Get organized and stay on top of your tasks', style: AppTypography.bodyLarge),
                       const SizedBox(height: AppSpacing.xl),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Full name',
-                          prefixIcon: const Icon(Icons.person_outline_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                      const AppTextField(
+                        hintText: 'Full name',
+                        prefixIcon: Icon(Icons.person_outline_rounded),
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Email address',
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_outline_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                      const AppTextField(
+                        hintText: 'Email address',
+                        prefixIcon: Icon(Icons.email_outlined),
+                        keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Confirm password',
-                          prefixIcon: const Icon(Icons.lock_reset_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                      const AppPasswordField(
+                        hintText: 'Password',
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.secondary,
-                            foregroundColor: Colors.white,
-                            padding: AppSpacing.buttonPadding,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                            ),
-                          ),
-                          child: const Text('Create Account', style: AppTypography.buttonText),
-                        ),
+                      const AppPasswordField(
+                        hintText: 'Confirm password',
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      AppButton(
+                        text: 'Create Account',
+                        backgroundColor: AppColors.secondary,
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                        },
                       ),
                       const SizedBox(height: AppSpacing.lg),
                       Row(
