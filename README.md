@@ -18,3 +18,15 @@ samples, guidance on mobile development, and a full API reference.
 
 
 find . -type f -name '._*' -delete
+
+1. Launcher Icons Generate 
+dart run flutter_launcher_icons
+
+2. Native Splash Screen Generate
+dart run flutter_native_splash:create
+
+
+3. For adding in dev dependencies
+
+flutter pub add dev:flutter_launcher_icons
+flutter pub add dev:flutter_native_splash
