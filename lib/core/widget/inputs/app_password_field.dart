@@ -9,7 +9,9 @@ class AppPasswordField extends StatefulWidget {
     this.controller,
     this.label = 'Password',
     this.hintText = 'Enter password',
+    this.helperText,
     this.errorText,
+    this.prefixIcon,
     this.onChanged,
     this.onSubmitted,
     this.validator,
@@ -20,7 +22,9 @@ class AppPasswordField extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hintText;
+  final String? helperText;
   final String? errorText;
+  final Widget? prefixIcon;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final FormFieldValidator<String>? validator;
@@ -40,6 +44,7 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
       controller: widget.controller,
       label: widget.label,
       hintText: widget.hintText,
+      helperText: widget.helperText,
       errorText: widget.errorText,
       obscureText: _obscureText,
       keyboardType: TextInputType.visiblePassword,
@@ -48,7 +53,7 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
       onSubmitted: widget.onSubmitted,
       validator: widget.validator,
       margin: widget.margin,
-      prefixIcon: const Icon(Icons.lock_outline_rounded),
+      prefixIcon: widget.prefixIcon,
       suffixIcon: IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
