@@ -1,58 +1,260 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
-import 'package:taskify_app/core/widget/buttons/app_button.dart';
-import 'package:taskify_app/router/routes/app_routes.dart';
+import 'package:taskify_app/core/constants/app_spacing.dart';
+import 'package:taskify_app/core/constants/app_typography.dart';
+import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/widget/app_components.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Register"), centerTitle: true),
-      body:  Center(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Card(
-            elevation: 3,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.person_add_alt_1,
-                    size: 60,
-                    color: Colors.deepPurple,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Register Screen",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "Create your account to continue.",
-                    textAlign: TextAlign.center,
-                  ),
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
 
-                  SizedBox(height: 8),
-                  AppButton(
-                    text: 'Login',
-                    backgroundColor: AppColors.accent,
-                    height: 52,
-                    borderRadius: 14,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.login);
-                    },
-                  ),
-                ],
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  DateTime? _selectedDob;
+  String? _selectedGender;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeColor = AppColors.primary;
+
+    return Scaffold(
+      backgroundColor: themeColor,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppColors.primaryDark, AppColors.primary],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
-        ),
+
+          Positioned(
+            top: -70,
+            right: -80,
+            child: Container(
+              width: AppUi.decorativeOrbLarge,
+              height: AppUi.decorativeOrbLarge,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.16),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+
+          SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                const SizedBox(height: AppSpacing.xxl),
+
+                const Icon(
+                  Icons.person_add_alt_1,
+                  size: 46,
+                  color: Colors.white,
+                ),
+
+                const SizedBox(height: AppSpacing.md),
+
+                Text(
+                  "Create Account",
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                ),
+
+                const SizedBox(height: 6),
+
+                Text(
+                  "Create your account to continue",
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: 0.85),
+                  ),
+                ),
+
+                const SizedBox(height: AppSpacing.xl),
+
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(32),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: AppTextField(
+                                  controller: _firstNameController,
+                                  label: "First Name",
+                                  hintText: "Shiva",
+                                ),
+                              ),
+
+                              const SizedBox(width: AppSpacing.xs),
+
+                              Expanded(
+                                child: AppTextField(
+                                  controller: _lastNameController,
+                                  label: "Last Name",
+                                  hintText: "Bhusal",
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDatePicker(
+                            label: "Date of Birth",
+                            hintText: "Select your date of birth",
+                            selectedDate: _selectedDob,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            onDateSelected: (date) {
+                              setState(() {
+                                _selectedDob = date;
+                              });
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDropdown<String>(
+                            label: "Gender",
+                            hintText: "Select Gender",
+                            value: _selectedGender,
+                            prefixIcon: const Icon(Icons.person_outline),
+                            items: const [
+                              "Male",
+                              "Female",
+                              "Other",
+                              "Prefer not to say",
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppTextField(
+                            controller: _emailController,
+                            label: "Email",
+                            hintText: "bhusalshiva@gmail.com",
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppPasswordField(
+                            controller: _passwordController,
+                            label: "Password",
+                            hintText: "••••••••",
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppPasswordField(
+                            controller: _confirmPasswordController,
+                            label: "Confirm Password",
+                            hintText: "••••••••",
+                          ),
+
+                          const SizedBox(height: AppSpacing.xl),
+
+                          AppButton(
+                            text: "Register",
+                            backgroundColor: themeColor,
+                            height: 52,
+                            borderRadius: 14,
+                            onPressed: () {
+                              // Register Logic
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.xl),
+
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Divider(color: AppColors.border),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: Text(
+                                  "Or",
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppColors.textMuted,
+                                  ),
+                                ),
+                              ),
+                              const Expanded(
+                                child: Divider(color: AppColors.border),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: AppSpacing.lg),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Already have an account? ",
+                                style: AppTypography.bodyMedium,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: AppTypography.labelMedium.copyWith(
+                                    color: themeColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

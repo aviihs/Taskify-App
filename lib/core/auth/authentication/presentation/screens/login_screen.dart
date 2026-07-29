@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
 
 import '../../../../constants/app_colors.dart';
@@ -76,20 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                const Text(
+                Text(
                   'Sign In to your Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   'Enter your email and password to sign in',
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.85),
-                    fontSize: 13,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
@@ -134,48 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  // SizedBox(
-                                  //   width: 22,
-                                  //   height: 22,
-                                  //   child: Checkbox(
-                                  //     value: _rememberMe,
-                                  //     activeColor: themeColor,
-                                  //     shape: RoundedRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(4),
-                                  //     ),
-                                  //     side: const BorderSide(
-                                  //       color: AppColors.disabled,
-                                  //       width: 1.5,
-                                  //     ),
-                                  //     onChanged: (val) {
-                                  //       setState(() {
-                                  //         _rememberMe = val ?? false;
-                                  //       });
-                                  //     },
-                                  //   ),
-                                  // ),
-                                  // const SizedBox(width: 8),
-                                  // const Text(
-                                  //   'Remember me',
-                                  //   style: TextStyle(
-                                  //     color: AppColors.textSecondary,
-                                  //     fontSize: 13,
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
                               GestureDetector(
                                 onTap: () {},
                                 child: Text(
                                   'Forgot password?',
-                                  style: TextStyle(
+                                  style: AppTypography.labelMedium.copyWith(
                                     color: themeColor,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    // decoration: TextDecoration.underline,
-                                    decorationColor: themeColor,
                                   ),
                                 ),
                               ),
@@ -190,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 52,
                             borderRadius: 14,
                             onPressed: () {
-                            print("object");
+                              print("object");
                             },
                           ),
                           const SizedBox(height: AppSpacing.xl),
@@ -212,7 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Or',
                                   style: AppTypography.bodyMedium.copyWith(
                                     color: AppColors.textMuted,
-                                    fontSize: 13,
                                   ),
                                 ),
                               ),
@@ -232,23 +191,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               const Text(
                                 "Don't have an account? ",
-                                style: TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 13,
-                                ),
+                                style: AppTypography.bodyMedium,
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(
-                                    context,
-                                  ).pushNamed(AppRoutes.register);
+                                 context.push(
+                                  AppRoutes.otpScreen
+                                 );
                                 },
                                 child: Text(
                                   'Sign up',
-                                  style: TextStyle(
+                                  style: AppTypography.labelMedium.copyWith(
                                     color: themeColor,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),

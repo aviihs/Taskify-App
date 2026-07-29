@@ -16,14 +16,13 @@ class TaskifyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeModeNotifier,
       builder: (context, mode, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Taskify',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
-          onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: AppRoutes.login,
+          routerConfig: appRouter,
         );
       },
     );
