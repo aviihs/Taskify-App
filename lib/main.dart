@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/core/theme/app_theme.dart';
-import 'package:taskify_app/router/app_router.dart';
-import 'package:taskify_app/router/routes/app_routes.dart';
+
+import 'core/design_system/design_system.dart';
+import 'router/app_router.dart';
+import 'router/routes/app_routes.dart';
 
 void main() {
   runApp(const TaskifyApp());
@@ -12,12 +13,18 @@ class TaskifyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Taskify',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: AppRoutes.login,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeModeNotifier,
+      builder: (context, mode, child) {
+        return MaterialApp.router(
+          title: 'Taskify',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: mode,
+          routerConfig: appRouter,
+        );
+      },
     );
   }
 }

@@ -3,14 +3,41 @@ import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
-import 'package:taskify_app/router/routes/app_routes.dart';
+import 'package:taskify_app/core/widget/app_components.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  DateTime? _selectedDob;
+  String? _selectedGender;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final themeColor = AppColors.primary;
+
     return Scaffold(
+      backgroundColor: themeColor,
       body: Stack(
         children: [
           Container(
@@ -22,9 +49,10 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
+
           Positioned(
-            top: -60,
-            right: -50,
+            top: -70,
+            right: -80,
             child: Container(
               width: AppUi.decorativeOrbLarge,
               height: AppUi.decorativeOrbLarge,
@@ -34,141 +62,196 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: -90,
-            left: -40,
-            child: Container(
-              width: AppUi.decorativeOrbSmall,
-              height: AppUi.decorativeOrbSmall,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.12),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
+
           SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                padding: AppSpacing.screenPadding,
-                child: Container(
-                  padding: AppSpacing.cardPadding,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(AppUi.cardRadius),
-                    boxShadow: const [AppUi.cardShadow],
+            bottom: false,
+            child: Column(
+              children: [
+                const SizedBox(height: AppSpacing.xxl),
+
+                const Icon(
+                  Icons.person_add_alt_1,
+                  size: 46,
+                  color: Colors.white,
+                ),
+
+                const SizedBox(height: AppSpacing.md),
+
+                Text(
+                  "Create Account",
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                ),
+
+                const SizedBox(height: 6),
+
+                Text(
+                  "Create your account to continue",
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.white.withValues(alpha: 0.85),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(AppSpacing.sm),
-                        decoration: BoxDecoration(
-                          color: AppColors.secondary.withValues(alpha: 0.14),
-                          borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                        ),
-                        child: const Icon(
-                          Icons.person_add_alt_1_rounded,
-                          color: AppColors.secondary,
-                          size: AppUi.iconSize,
-                        ),
+                ),
+
+                const SizedBox(height: AppSpacing.xl),
+
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(32),
                       ),
-                      const SizedBox(height: AppSpacing.md),
-                      const Text('Create your account', style: AppTypography.heading1),
-                      const SizedBox(height: AppSpacing.xs),
-                      const Text('Get organized and stay on top of your tasks', style: AppTypography.bodyLarge),
-                      const SizedBox(height: AppSpacing.xl),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Full name',
-                          prefixIcon: const Icon(Icons.person_outline_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Email address',
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_outline_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Confirm password',
-                          prefixIcon: const Icon(Icons.lock_reset_rounded),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.secondary,
-                            foregroundColor: Colors.white,
-                            padding: AppSpacing.buttonPadding,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                            ),
-                          ),
-                          child: const Text('Create Account', style: AppTypography.buttonText),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+                      child: Column(
                         children: [
-                          const Text('Already have an account? '),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(AppRoutes.login);
+                          Row(
+                            children: [
+                              Expanded(
+                                child: AppTextField(
+                                  controller: _firstNameController,
+                                  label: "First Name",
+                                  hintText: "Shiva",
+                                ),
+                              ),
+
+                              const SizedBox(width: AppSpacing.xs),
+
+                              Expanded(
+                                child: AppTextField(
+                                  controller: _lastNameController,
+                                  label: "Last Name",
+                                  hintText: "Bhusal",
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDatePicker(
+                            label: "Date of Birth",
+                            hintText: "Select your date of birth",
+                            selectedDate: _selectedDob,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            onDateSelected: (date) {
+                              setState(() {
+                                _selectedDob = date;
+                              });
                             },
-                            child: Text(
-                              'Sign in',
-                              style: AppTypography.labelMedium.copyWith(color: AppColors.secondary),
-                            ),
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDropdown<String>(
+                            label: "Gender",
+                            hintText: "Select Gender",
+                            value: _selectedGender,
+                            prefixIcon: const Icon(Icons.person_outline),
+                            items: const [
+                              "Male",
+                              "Female",
+                              "Other",
+                              "Prefer not to say",
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppTextField(
+                            controller: _emailController,
+                            label: "Email",
+                            hintText: "bhusalshiva@gmail.com",
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppPasswordField(
+                            controller: _passwordController,
+                            label: "Password",
+                            hintText: "••••••••",
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppPasswordField(
+                            controller: _confirmPasswordController,
+                            label: "Confirm Password",
+                            hintText: "••••••••",
+                          ),
+
+                          const SizedBox(height: AppSpacing.xl),
+
+                          AppButton(
+                            text: "Register",
+                            backgroundColor: themeColor,
+                            height: 52,
+                            borderRadius: 14,
+                            onPressed: () {
+                              // Register Logic
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.xl),
+
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Divider(color: AppColors.border),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: Text(
+                                  "Or",
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppColors.textMuted,
+                                  ),
+                                ),
+                              ),
+                              const Expanded(
+                                child: Divider(color: AppColors.border),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: AppSpacing.lg),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Already have an account? ",
+                                style: AppTypography.bodyMedium,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: AppTypography.labelMedium.copyWith(
+                                    color: themeColor,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],

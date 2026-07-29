@@ -1,21 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/screens/otp_screen.dart';
+
+import 'routes/app_routes.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/login_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/register_screen.dart';
 import 'package:taskify_app/features/home/presentation/pages/home_page.dart';
 
-import 'routes/app_routes.dart';
+final GoRouter appRouter = GoRouter(
+  initialLocation: AppRoutes.login,
 
-class AppRouter {
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
-      case AppRoutes.login:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
-      case AppRoutes.register:
-        return MaterialPageRoute(builder: (_) => const RegisterScreen());
-      default:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
-    }
-  }
-}
+  routes: [
+    GoRoute(
+      path: AppRoutes.login,
+      builder: (context, state) => const LoginScreen(),
+    ),
+
+    GoRoute(
+      path: AppRoutes.register,
+      builder: (context, state) => const RegisterScreen(),
+    ),
+
+    GoRoute(
+      path: AppRoutes.home,
+      builder: (context, state) => const HomePage(),
+    ),
+     GoRoute(
+      path: AppRoutes.otpScreen,
+      builder: (context, state) => const OtpScreen(),
+    ),
+  ],
+);
