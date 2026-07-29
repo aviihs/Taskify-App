@@ -5,4 +5,6 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String otpScreen = '/otp-screen';
+
+  static const String fullDetails = '/full-details';
 }

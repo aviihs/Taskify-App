@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
 import 'package:taskify_app/core/widget/app_components.dart';
+import 'package:taskify_app/router/routes/app_routes.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -196,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 52,
                             borderRadius: 14,
                             onPressed: () {
-                              // Register Logic
+                                context.push(AppRoutes.otpScreen);
                             },
                           ),
 
@@ -235,7 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  context.go(AppRoutes.login);
                                 },
                                 child: Text(
                                   "Login",

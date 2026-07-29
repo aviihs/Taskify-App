@@ -196,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               GestureDetector(
                                 onTap: () {
                                  context.push(
-                                  AppRoutes.otpScreen
+                                  AppRoutes.register
                                  );
                                 },
                                 child: Text(
