@@ -21,8 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  DateTime? _selectedDob;
-  String? _selectedGender;
+
 
   @override
   void dispose() {
@@ -132,40 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const SizedBox(height: AppSpacing.md),
 
-                          AppDatePicker(
-                            label: "Date of Birth",
-                            hintText: "Select your date of birth",
-                            selectedDate: _selectedDob,
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                            onDateSelected: (date) {
-                              setState(() {
-                                _selectedDob = date;
-                              });
-                            },
-                          ),
-
-                          const SizedBox(height: AppSpacing.md),
-
-                          AppDropdown<String>(
-                            label: "Gender",
-                            hintText: "Select Gender",
-                            value: _selectedGender,
-                            prefixIcon: const Icon(Icons.person_outline),
-                            items: const [
-                              "Male",
-                              "Female",
-                              "Other",
-                              "Prefer not to say",
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value;
-                              });
-                            },
-                          ),
-
-                          const SizedBox(height: AppSpacing.md),
+                    
 
                           AppTextField(
                             controller: _emailController,
@@ -237,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  context.go(AppRoutes.login);
+                                  context.pop(AppRoutes.login);
                                 },
                                 child: Text(
                                   "Login",

@@ -24,6 +24,8 @@ class _FullDetailsScreenState extends State<FullDetailsScreen> {
   final _bioController = TextEditingController();
 
   File? _profileImage;
+  DateTime? _selectedDob;
+  String? _selectedGender;
 
   bool _isOnline = true;
 
@@ -206,6 +208,40 @@ class _FullDetailsScreenState extends State<FullDetailsScreen> {
                             label: "Full Name",
 
                             hintText: "Shiva Bhusal",
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDatePicker(
+                            label: "Date of Birth",
+                            hintText: "Select your date of birth",
+                            selectedDate: _selectedDob,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            onDateSelected: (date) {
+                              setState(() {
+                                _selectedDob = date;
+                              });
+                            },
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppDropdown<String>(
+                            label: "Gender",
+                            hintText: "Select Gender",
+                            value: _selectedGender,
+                            prefixIcon: const Icon(Icons.person_outline),
+                            items: const [
+                              "Male",
+                              "Female",
+                              "Other",
+                              "Prefer not to say",
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
                           ),
 
                           const SizedBox(height: AppSpacing.md),
