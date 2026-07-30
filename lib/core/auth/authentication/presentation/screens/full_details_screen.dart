@@ -208,6 +208,7 @@ class _FullDetailsScreenState extends State<FullDetailsScreen> {
                             label: "Full Name",
 
                             hintText: "Shiva Bhusal",
+                            readOnly: true,
                           ),
                           const SizedBox(height: AppSpacing.md),
 
