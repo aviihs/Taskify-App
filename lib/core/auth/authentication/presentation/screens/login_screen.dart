@@ -131,7 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                              onTap: () {
+    context.push(AppRoutes.forgotPassword);
+  },
                                 child: Text(
                                   'Forgot password?',
                                   style: AppTypography.labelMedium.copyWith(
@@ -196,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               GestureDetector(
                                 onTap: () {
                                  context.push(
-                                  AppRoutes.otpScreen
+                                  AppRoutes.register
                                  );
                                 },
                                 child: Text(

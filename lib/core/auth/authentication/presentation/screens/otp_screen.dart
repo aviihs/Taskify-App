@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
 import 'package:taskify_app/core/widget/app_components.dart';
+import 'package:taskify_app/router/routes/app_routes.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -17,11 +19,12 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final List<TextEditingController> _controllers =
-      List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
 
-  final List<FocusNode> _focusNodes =
-      List.generate(6, (_) => FocusNode());
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
 
   Timer? _timer;
 
@@ -42,22 +45,19 @@ class _OtpScreenState extends State<OtpScreen> {
       _canResend = false;
     });
 
-    _timer = Timer.periodic(
-      const Duration(seconds: 1),
-      (timer) {
-        if (_seconds <= 0) {
-          timer.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_seconds <= 0) {
+        timer.cancel();
 
-          setState(() {
-            _canResend = true;
-          });
-        } else {
-          setState(() {
-            _seconds--;
-          });
-        }
-      },
-    );
+        setState(() {
+          _canResend = true;
+        });
+      } else {
+        setState(() {
+          _seconds--;
+        });
+      }
+    });
   }
 
   String get timerText {
@@ -82,7 +82,6 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
-
   Widget _buildOtpBox(int index) {
     return SizedBox(
       width: 46,
@@ -93,9 +92,7 @@ class _OtpScreenState extends State<OtpScreen> {
         maxLength: 1,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-        ],
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
 
         style: AppTypography.heading2,
 
@@ -105,22 +102,13 @@ class _OtpScreenState extends State<OtpScreen> {
           fillColor: AppColors.background,
 
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              AppUi.borderRadius,
-            ),
-            borderSide: const BorderSide(
-              color: AppColors.border,
-            ),
+            borderRadius: BorderRadius.circular(AppUi.borderRadius),
+            borderSide: const BorderSide(color: AppColors.border),
           ),
 
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              AppUi.borderRadius,
-            ),
-            borderSide: const BorderSide(
-              color: AppColors.primary,
-              width: 2,
-            ),
+            borderRadius: BorderRadius.circular(AppUi.borderRadius),
+            borderSide: const BorderSide(color: AppColors.primary, width: 2),
           ),
         ),
 
@@ -137,7 +125,6 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final themeColor = AppColors.primary;
@@ -147,20 +134,15 @@ class _OtpScreenState extends State<OtpScreen> {
 
       body: Stack(
         children: [
-
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  AppColors.primaryDark,
-                  AppColors.primary,
-                ],
+                colors: [AppColors.primaryDark, AppColors.primary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
             ),
           ),
-
 
           Positioned(
             top: -70,
@@ -175,17 +157,12 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
           ),
 
-
           SafeArea(
             bottom: false,
 
             child: Column(
               children: [
-
-                const SizedBox(
-                  height: AppSpacing.xxl,
-                ),
-
+                const SizedBox(height: AppSpacing.xxl),
 
                 const Icon(
                   Icons.mark_email_read_outlined,
@@ -193,22 +170,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   color: Colors.white,
                 ),
 
-
-                const SizedBox(
-                  height: AppSpacing.md,
-                ),
-
+                const SizedBox(height: AppSpacing.md),
 
                 Text(
                   "Verify Your Account",
-                  style: AppTypography.heading2.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
                 ),
 
-
                 const SizedBox(height: 6),
-
 
                 Text(
                   "Enter the 6-digit code sent to your email",
@@ -217,11 +186,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                 ),
 
-
-                const SizedBox(
-                  height: AppSpacing.xl,
-                ),
-
+                const SizedBox(height: AppSpacing.xl),
 
                 Expanded(
                   child: Container(
@@ -234,30 +199,22 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
 
-
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
 
                       child: Column(
                         children: [
-
                           const SizedBox(height: 8),
-
 
                           Text(
                             "Enter verification code",
                             style: AppTypography.labelMedium,
                           ),
 
-
-                          const SizedBox(
-                            height: AppSpacing.lg,
-                          ),
-
+                          const SizedBox(height: AppSpacing.lg),
 
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                             children: List.generate(
                               6,
@@ -265,11 +222,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                           ),
 
-
-                          const SizedBox(
-                            height: AppSpacing.md,
-                          ),
-
+                          const SizedBox(height: AppSpacing.md),
 
                           Text(
                             "Code expires in $timerText",
@@ -278,11 +231,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                           ),
 
-
-                          const SizedBox(
-                            height: AppSpacing.xl,
-                          ),
-
+                          const SizedBox(height: AppSpacing.xl),
 
                           AppButton(
                             text: "Verify OTP",
@@ -295,34 +244,24 @@ class _OtpScreenState extends State<OtpScreen> {
                                   .map((e) => e.text)
                                   .join();
 
-                              debugPrint(
-                                "OTP : $otp",
-                              );
+                              debugPrint("OTP : $otp");
+                              context.go(AppRoutes.fullDetails);
                             },
                           ),
 
-
-                          const SizedBox(
-                            height: AppSpacing.lg,
-                          ),
-
+                          const SizedBox(height: AppSpacing.lg),
 
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
 
                             children: [
-
                               const Text(
                                 "Didn't receive code? ",
                                 style: AppTypography.bodyMedium,
                               ),
 
-
                               GestureDetector(
-                                onTap: _canResend
-                                    ? _startTimer
-                                    : null,
+                                onTap: _canResend ? _startTimer : null,
 
                                 child: Text(
                                   "Resend OTP",

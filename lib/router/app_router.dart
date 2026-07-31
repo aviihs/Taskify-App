@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/screens/full_details_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/otp_screen.dart';
 
 import 'routes/app_routes.dart';
@@ -28,5 +29,19 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.otpScreen,
       builder: (context, state) => const OtpScreen(),
     ),
+
+    GoRoute(
+  path: AppRoutes.fullDetails,
+  builder: (_, _) => const FullDetailsScreen(),
+),
+GoRoute(
+  path: AppRoutes.forgotPassword,
+  builder: (context, state) => const ForgotPasswordScreen(),
+),
+
+GoRoute(
+  path: AppRoutes.verifyOtp,
+  builder: (context, state) => const VerifyOtpScreen(),
+),
   ],
 );

@@ -51,6 +51,9 @@ dependencies:
   # Navigation
   go_router: ^13.2.0
 
+  # Image Picker
+  image_picker: ^1.1.2
+
   # Redirect URL
   url_launcher: ^6.3.0
 
