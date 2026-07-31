@@ -34,5 +34,14 @@ final GoRouter appRouter = GoRouter(
   path: AppRoutes.fullDetails,
   builder: (_, _) => const FullDetailsScreen(),
 ),
+GoRoute(
+  path: AppRoutes.forgotPassword,
+  builder: (context, state) => const ForgotPasswordScreen(),
+),
+
+GoRoute(
+  path: AppRoutes.verifyOtp,
+  builder: (context, state) => const VerifyOtpScreen(),
+),
   ],
 );

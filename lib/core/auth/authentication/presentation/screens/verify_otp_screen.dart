@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,19 +8,23 @@ import 'package:taskify_app/core/constants/app_ui.dart';
 import 'package:taskify_app/core/widget/app_components.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+class VerifyOtpScreen extends StatefulWidget {
+  const VerifyOtpScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _emailController = TextEditingController();
+class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
+  final _otpController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _otpController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -83,15 +86,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: AppSpacing.md),
 
                 const Icon(
-                  Icons.lock_reset_rounded,
-                  size: 46,
+                  Icons.verified_user_outlined,
                   color: Colors.white,
+                  size: 46,
                 ),
 
                 const SizedBox(height: AppSpacing.md),
 
                 Text(
-                  "Forgot Password",
+                  "Verify OTP",
                   style: AppTypography.heading2.copyWith(
                     color: Colors.white,
                   ),
@@ -100,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: 6),
 
                 Text(
-                  "Enter your email to receive an OTP",
+                  "Enter the OTP and create a new password",
                   textAlign: TextAlign.center,
                   style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: .85),
@@ -121,46 +124,71 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppTextField(
-                            controller: _emailController,
-                            label: "Email",
-                            hintText: "jhondoe@gmail.com",
-                            keyboardType: TextInputType.emailAddress,
+                            controller: _otpController,
+                            label: "OTP Code",
+                            hintText: "123456",
+                            keyboardType: TextInputType.number,
                           ),
 
                           const SizedBox(height: AppSpacing.sm),
 
-                          Text(
-                            "We'll send a 6-digit verification code to your email.",
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: AppColors.textMuted,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                // resend otp
+                              },
+                              child: Text(
+                                "Resend OTP",
+                                style: AppTypography.labelMedium.copyWith(
+                                  color: themeColor,
+                                ),
+                              ),
                             ),
+                          ),
+
+                          const SizedBox(height: AppSpacing.lg),
+
+                          AppPasswordField(
+                            controller: _passwordController,
+                            label: "New Password",
+                            hintText: "••••••••",
+                            prefixIcon: null,
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          AppPasswordField(
+                            controller: _confirmPasswordController,
+                            label: "Confirm Password",
+                            hintText: "••••••••",
+                            prefixIcon: null,
                           ),
 
                           const SizedBox(height: AppSpacing.xxl),
 
                           AppButton(
-                            text: "Send OTP",
+                            text: "Reset Password",
                             backgroundColor: themeColor,
                             height: 52,
                             borderRadius: 14,
                             onPressed: () {
-                              context.push(AppRoutes.verifyOtp);
+                              // TODO: Verify OTP & Reset Password
+
+                              context.go(AppRoutes.login);
                             },
                           ),
 
                           const SizedBox(height: AppSpacing.lg),
 
-                          Center(
-                            child: GestureDetector(
-                              onTap: () => context.pop(),
-                              child: Text(
-                                "Back to Login",
-                                style: AppTypography.labelMedium.copyWith(
-                                  color: themeColor,
-                                ),
+                          GestureDetector(
+                            onTap: () => context.pop(),
+                            child: Text(
+                              "Change Email",
+                              style: AppTypography.labelMedium.copyWith(
+                                color: themeColor,
                               ),
                             ),
                           ),
