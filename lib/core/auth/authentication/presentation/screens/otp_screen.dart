@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/widget/otp_input_widget.dart';
 
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
@@ -82,48 +83,53 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
-  Widget _buildOtpBox(int index) {
-    return SizedBox(
-      width: 46,
-      height: 56,
-      child: TextField(
-        controller: _controllers[index],
-        focusNode: _focusNodes[index],
-        maxLength: 1,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  // Widget _buildOtpBox(int index) {
+  //   return SizedBox(
+  //     width: 46,
+  //     height: 56,
+  //     child: TextField(
+  //       controller: _controllers[index],
+  //       focusNode: _focusNodes[index],
+  //       maxLength: 1,
+  //       keyboardType: TextInputType.number,
+  //       textAlign: TextAlign.center,
+  //       textAlignVertical: TextAlignVertical.center,
+  //       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
 
-        style: AppTypography.heading2,
+  //       style: const TextStyle(
+  //         fontSize: 24,
+  //         fontWeight: FontWeight.w600,
+  //         color: AppColors.textPrimary,
+  //       ),
 
-        decoration: InputDecoration(
-          counterText: "",
-          filled: true,
-          fillColor: AppColors.background,
+  //       decoration: InputDecoration(
+  //         counterText: "",
+  //         contentPadding: const EdgeInsets.symmetric(vertical: 14),
 
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppUi.borderRadius),
-            borderSide: const BorderSide(color: AppColors.border),
-          ),
+  //         filled: true,
+  //         fillColor: AppColors.background,
 
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppUi.borderRadius),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2),
-          ),
-        ),
+  //         enabledBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(AppUi.borderRadius),
+  //           borderSide: const BorderSide(color: AppColors.border),
+  //         ),
 
-        onChanged: (value) {
-          if (value.isNotEmpty && index < 5) {
-            _focusNodes[index + 1].requestFocus();
-          }
+  //         focusedBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(AppUi.borderRadius),
+  //           borderSide: const BorderSide(color: AppColors.primary, width: 2),
+  //         ),
+  //       ),
 
-          if (value.isEmpty && index > 0) {
-            _focusNodes[index - 1].requestFocus();
-          }
-        },
-      ),
-    );
-  }
+  //       onChanged: (value) {
+  //         if (value.isNotEmpty && index < 5) {
+  //           _focusNodes[index + 1].requestFocus();
+  //         } else if (value.isEmpty && index > 0) {
+  //           _focusNodes[index - 1].requestFocus();
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +168,24 @@ class _OtpScreenState extends State<OtpScreen> {
 
             child: Column(
               children: [
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: AppSpacing.lg),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => context.pop(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: AppSpacing.md),
 
                 const Icon(
                   Icons.mark_email_read_outlined,
@@ -213,13 +236,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
                           const SizedBox(height: AppSpacing.lg),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                            children: List.generate(
-                              6,
-                              (index) => _buildOtpBox(index),
-                            ),
+                          OtpInput(
+                            controllers: _controllers,
+                            focusNodes: _focusNodes,
                           ),
 
                           const SizedBox(height: AppSpacing.md),

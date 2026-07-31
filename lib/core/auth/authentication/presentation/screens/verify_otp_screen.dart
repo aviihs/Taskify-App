@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/widget/otp_input_widget.dart';
 
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
@@ -16,13 +19,67 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  final _otpController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
+
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+
+  Timer? _timer;
+
+  int _seconds = 120;
+  bool _canResend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+
+    setState(() {
+      _seconds = 120;
+      _canResend = false;
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_seconds <= 0) {
+        timer.cancel();
+
+        setState(() {
+          _canResend = true;
+        });
+      } else {
+        setState(() {
+          _seconds--;
+        });
+      }
+    });
+  }
+
+  String get timerText {
+    final minute = (_seconds ~/ 60).toString().padLeft(2, '0');
+    final second = (_seconds % 60).toString().padLeft(2, '0');
+
+    return "$minute:$second";
+  }
+
   @override
   void dispose() {
-    _otpController.dispose();
+    _timer?.cancel();
+
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    for (final focus in _focusNodes) {
+      focus.dispose();
+    }
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -39,10 +96,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  AppColors.primaryDark,
-                  AppColors.primary,
-                ],
+                colors: [AppColors.primaryDark, AppColors.primary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -95,9 +149,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
                 Text(
                   "Verify OTP",
-                  style: AppTypography.heading2.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
                 ),
 
                 const SizedBox(height: 6),
@@ -125,11 +177,27 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       padding: const EdgeInsets.all(24),
                       child: Column(
                         children: [
-                          AppTextField(
-                            controller: _otpController,
-                            label: "OTP Code",
-                            hintText: "123456",
-                            keyboardType: TextInputType.number,
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "OTP Code",
+                              style: AppTypography.labelMedium,
+                            ),
+                          ),
+
+                          const SizedBox(height: AppSpacing.md),
+
+                          OtpInput(
+                            controllers: _controllers,
+                            focusNodes: _focusNodes,
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+
+                          Text(
+                            "Code expires in $timerText",
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: themeColor,
+                            ),
                           ),
 
                           const SizedBox(height: AppSpacing.sm),
@@ -137,13 +205,18 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
-                              onTap: () {
-                                // resend otp
-                              },
+                              onTap: _canResend
+                                  ? () {
+                                      // TODO: Resend OTP API
+                                      _startTimer();
+                                    }
+                                  : null,
                               child: Text(
                                 "Resend OTP",
                                 style: AppTypography.labelMedium.copyWith(
-                                  color: themeColor,
+                                  color: _canResend
+                                      ? themeColor
+                                      : AppColors.disabled,
                                 ),
                               ),
                             ),

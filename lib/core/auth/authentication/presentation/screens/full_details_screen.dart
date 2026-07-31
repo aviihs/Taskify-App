@@ -141,7 +141,24 @@ class _FullDetailsScreenState extends State<FullDetailsScreen> {
 
             child: Column(
               children: [
-                const SizedBox(height: AppSpacing.xxl),
+                  const SizedBox(height: AppSpacing.lg),
+
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () => context.pop(),
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      const SizedBox(height: AppSpacing.md),
 
                 const Icon(
                   Icons.account_circle_outlined,

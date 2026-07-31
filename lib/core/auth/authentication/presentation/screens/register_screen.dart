@@ -21,8 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-
-
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -68,7 +66,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             bottom: false,
             child: Column(
               children: [
-                const SizedBox(height: AppSpacing.xxl),
+                const SizedBox(height: AppSpacing.lg),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => context.pop(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: AppSpacing.md),
 
                 const Icon(
                   Icons.person_add_alt_1,
@@ -131,8 +146,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const SizedBox(height: AppSpacing.md),
 
-                    
-
                           AppTextField(
                             controller: _emailController,
                             label: "Email",
@@ -164,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 52,
                             borderRadius: 14,
                             onPressed: () {
-                                context.push(AppRoutes.otpScreen);
+                              context.push(AppRoutes.otpScreen);
                             },
                           ),
 
