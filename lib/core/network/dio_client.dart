@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:taskify_app/core/network/api_constant.dart';
 
 import '../constants/app_constants.dart';
 
@@ -11,7 +12,7 @@ class DioClient {
 
   static BaseOptions _createBaseOptions() {
     return BaseOptions(
-      baseUrl: AppConstants.baseUrl,
+      baseUrl: ApiConstants.baseUrl,
       connectTimeout: AppConstants.connectTimeout,
       receiveTimeout: AppConstants.receiveTimeout,
       sendTimeout: AppConstants.sendTimeout,

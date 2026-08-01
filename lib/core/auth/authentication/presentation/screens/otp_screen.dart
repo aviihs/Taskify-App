@@ -83,54 +83,6 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
-  // Widget _buildOtpBox(int index) {
-  //   return SizedBox(
-  //     width: 46,
-  //     height: 56,
-  //     child: TextField(
-  //       controller: _controllers[index],
-  //       focusNode: _focusNodes[index],
-  //       maxLength: 1,
-  //       keyboardType: TextInputType.number,
-  //       textAlign: TextAlign.center,
-  //       textAlignVertical: TextAlignVertical.center,
-  //       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
-  //       style: const TextStyle(
-  //         fontSize: 24,
-  //         fontWeight: FontWeight.w600,
-  //         color: AppColors.textPrimary,
-  //       ),
-
-  //       decoration: InputDecoration(
-  //         counterText: "",
-  //         contentPadding: const EdgeInsets.symmetric(vertical: 14),
-
-  //         filled: true,
-  //         fillColor: AppColors.background,
-
-  //         enabledBorder: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(AppUi.borderRadius),
-  //           borderSide: const BorderSide(color: AppColors.border),
-  //         ),
-
-  //         focusedBorder: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(AppUi.borderRadius),
-  //           borderSide: const BorderSide(color: AppColors.primary, width: 2),
-  //         ),
-  //       ),
-
-  //       onChanged: (value) {
-  //         if (value.isNotEmpty && index < 5) {
-  //           _focusNodes[index + 1].requestFocus();
-  //         } else if (value.isEmpty && index > 0) {
-  //           _focusNodes[index - 1].requestFocus();
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     final themeColor = AppColors.primary;
