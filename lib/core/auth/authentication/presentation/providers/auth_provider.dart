@@ -1,39 +1,38 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:taskify_app/core/auth/authentication/data/datasource/auth_remote_datasource.dart';
+import 'package:taskify_app/core/auth/authentication/data/model/auth_model.dart';
 import 'package:taskify_app/core/auth/authentication/data/repository/auth_repository_impl.dart';
 import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.dart';
 import 'package:taskify_app/core/auth/authentication/domain/repository/auth_repository.dart';
 import 'package:taskify_app/core/error/api_error_parser.dart';
 import 'package:taskify_app/core/network/api_provider.dart';
-
+import 'package:taskify_app/core/network/dio_provider.dart';
+import 'package:taskify_app/core/storage/token_storage.dart';
 
 // Remote Datasource Provider
-final authRemoteDatasourceProvider =
-    Provider<AuthRemoteDatasource>((ref) {
+final authRemoteDatasourceProvider = Provider<AuthRemoteDatasource>((ref) {
   return AuthRemoteDatasource(
     ref.watch(apiClientProvider),
   );
 });
 
-
 // Repository Provider
-final authRepositoryProvider =
-    Provider<AuthRepository>((ref) {
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepositoryImpl(
     ref.watch(authRemoteDatasourceProvider),
+    ref.watch(tokenStorageProvider),
   );
 });
-
 
 // Auth StateNotifier Provider
-final authProvider =
-    StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier(
     ref.watch(authRepositoryProvider),
+    ref.watch(tokenStorageProvider),
   );
 });
-
 
 // State
 class AuthState {
@@ -50,7 +49,6 @@ class AuthState {
     this.error,
     this.successMessage,
   });
-
 
   AuthState copyWith({
     bool? isLoading,
@@ -73,15 +71,27 @@ class AuthState {
   }
 }
 
-
 // Notifier
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthRepository _repository;
+  final TokenStorage _tokenStorage;
 
+  AuthNotifier(this._repository, this._tokenStorage) : super(const AuthState()) {
+    checkAuthStatus();
+  }
 
-  AuthNotifier(this._repository)
-      : super(const AuthState());
-
+  /// Restore user session on app launch
+  Future<void> checkAuthStatus() async {
+    final token = await _tokenStorage.getAccessToken();
+    final userJson = await _tokenStorage.getUserJson();
+    if (token != null && userJson != null) {
+      final model = AuthModel.fromJson(userJson);
+      state = state.copyWith(
+        token: token,
+        user: model.toEntity(),
+      );
+    }
+  }
 
   // Register
   Future<bool> register(AuthEntity auth) async {
@@ -96,7 +106,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
       state = state.copyWith(
         isLoading: false,
-        successMessage: "Registered successfully",
+        successMessage: "Registered successfully! Please verify your email.",
       );
 
       return true;
@@ -112,9 +122,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-
   // Login
   Future<bool> login(AuthEntity auth) async {
+    debugPrint("LOGIN START: ${auth.email}");
+
     state = state.copyWith(
       isLoading: true,
       clearError: true,
@@ -124,6 +135,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final user = await _repository.login(auth);
 
+      debugPrint("LOGIN SUCCESS. TOKEN : ${user.token}");
+
       state = state.copyWith(
         isLoading: false,
         user: user,
@@ -132,7 +145,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
 
       return true;
-    } catch (error) {
+    } catch (error, stack) {
+      debugPrint("LOGIN FAILED: $error");
+      debugPrint(stack.toString());
+
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
@@ -143,7 +159,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
       return false;
     }
   }
-
 
   // Refresh Token
   Future<void> refreshToken() async {
@@ -163,21 +178,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-
   // Logout
-  Future<void> logout(AuthEntity auth) async {
+  Future<void> logout([AuthEntity? auth]) async {
     state = state.copyWith(
       isLoading: true,
       clearError: true,
     );
 
     try {
-      await _repository.logout(auth);
+      await _repository.logout(auth ?? const AuthEntity());
 
       state = const AuthState(
         successMessage: "Logout successful",
       );
-
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
@@ -188,29 +201,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-
   // Forgot Password
   Future<bool> forgotPassword(AuthEntity auth) async {
     try {
       state = state.copyWith(
         isLoading: true,
         clearError: true,
+        clearSuccess: true,
       );
 
       await _repository.forgotPassword(auth);
 
       state = state.copyWith(
         isLoading: false,
-        successMessage: "OTP sent successfully",
+        successMessage: "OTP sent successfully to your email",
       );
 
       return true;
-
-    } catch(error) {
+    } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
-        isLoading:false,
+        isLoading: false,
         error: failure.message,
       );
 
@@ -218,105 +230,151 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-
   // Reset Password
   Future<bool> resetPassword(AuthEntity auth) async {
     try {
       state = state.copyWith(
-        isLoading:true,
-        clearError:true,
+        isLoading: true,
+        clearError: true,
+        clearSuccess: true,
       );
 
       await _repository.resetPassword(auth);
 
       state = state.copyWith(
-        isLoading:false,
-        successMessage:"Password reset successful",
+        isLoading: false,
+        successMessage: "Password reset successful",
       );
 
       return true;
-
-    } catch(error){
+    } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
-        isLoading:false,
-        error:failure.message,
+        isLoading: false,
+        error: failure.message,
       );
 
       return false;
     }
   }
-
 
   // Change Password
   Future<bool> changePassword(AuthEntity auth) async {
     try {
+      state = state.copyWith(
+        isLoading: true,
+        clearError: true,
+        clearSuccess: true,
+      );
+
       await _repository.changePassword(auth);
 
       state = state.copyWith(
-        successMessage:"Password changed successfully",
+        isLoading: false,
+        successMessage: "Password changed successfully",
       );
 
       return true;
-
-    } catch(error){
+    } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
-        error:failure.message,
+        isLoading: false,
+        error: failure.message,
       );
 
       return false;
     }
   }
-
 
   // Verify Email
   Future<bool> verifyEmail(AuthEntity auth) async {
     try {
+      state = state.copyWith(
+        isLoading: true,
+        clearError: true,
+        clearSuccess: true,
+      );
+
       await _repository.verifyEmail(auth);
 
       state = state.copyWith(
-        successMessage:"Email verified successfully",
+        isLoading: false,
+        successMessage: "Email verified successfully",
       );
 
       return true;
-
-    } catch(error){
+    } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
-        error:failure.message,
+        isLoading: false,
+        error: failure.message,
       );
 
       return false;
     }
   }
-
 
   // Resend OTP
   Future<bool> resendOtp(AuthEntity auth) async {
     try {
+      state = state.copyWith(
+        isLoading: true,
+        clearError: true,
+        clearSuccess: true,
+      );
+
       await _repository.resendOtp(auth);
 
       state = state.copyWith(
-        successMessage:"OTP sent again",
+        isLoading: false,
+        successMessage: "OTP resent successfully",
       );
 
       return true;
-
-    } catch(error){
+    } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
       state = state.copyWith(
-        error:failure.message,
+        isLoading: false,
+        error: failure.message,
       );
 
       return false;
     }
   }
 
+  // Update Profile
+  Future<bool> updateProfile(AuthEntity auth) async {
+    try {
+      state = state.copyWith(
+        isLoading: true,
+        clearError: true,
+        clearSuccess: true,
+      );
+
+      final updatedUser = await _repository.updateProfile(auth);
+
+      state = state.copyWith(
+        isLoading: false,
+        user: updatedUser,
+        successMessage: "Profile updated successfully",
+      );
+
+      return true;
+    } catch (error) {
+      final failure = ApiErrorParser.parse(error);
+
+      state = state.copyWith(
+        isLoading: false,
+        error: failure.message,
+      );
+
+      return false;
+    }
+  }
 
   void clearState() {
     state = const AuthState();

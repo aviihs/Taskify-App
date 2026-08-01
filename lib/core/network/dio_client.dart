@@ -4,7 +4,11 @@ import 'package:taskify_app/core/network/api_constant.dart';
 import '../constants/app_constants.dart';
 
 class DioClient {
-  DioClient({Dio? dio}) : _dio = dio ?? Dio(_createBaseOptions());
+  DioClient({Dio? dio}) : _dio = dio ?? Dio(_createBaseOptions()) {
+    _dio.interceptors.add(
+      LogInterceptor(requestBody: true, responseBody: true, error: true),
+    );
+  }
 
   final Dio _dio;
 
@@ -13,9 +17,13 @@ class DioClient {
   static BaseOptions _createBaseOptions() {
     return BaseOptions(
       baseUrl: ApiConstants.baseUrl,
+
       connectTimeout: AppConstants.connectTimeout,
+
       receiveTimeout: AppConstants.receiveTimeout,
+
       sendTimeout: AppConstants.sendTimeout,
+
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -33,7 +41,12 @@ class DioClient {
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _dio.get<T>(path, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
+    return _dio.get<T>(
+      path,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 
   Future<Response<T>> post<T>(
@@ -43,7 +56,13 @@ class DioClient {
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _dio.post<T>(path, data: data, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
+    return _dio.post<T>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 
   Future<Response<T>> put<T>(
@@ -53,7 +72,13 @@ class DioClient {
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _dio.put<T>(path, data: data, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
+    return _dio.put<T>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 
   Future<Response<T>> delete<T>(
@@ -63,6 +88,12 @@ class DioClient {
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _dio.delete<T>(path, data: data, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
+    return _dio.delete<T>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 }

@@ -18,4 +18,6 @@ abstract class AuthRepository {
   Future<void> verifyEmail(AuthEntity auth);
 
   Future<void> resendOtp(AuthEntity auth);
+
+  Future<AuthEntity> updateProfile(AuthEntity auth);
 }

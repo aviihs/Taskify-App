@@ -1,22 +1,29 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
-import 'package:taskify_app/core/widget/app_components.dart';
+import 'package:taskify_app/core/utils/validators.dart';
+import 'package:taskify_app/core/widget/buttons/app_button.dart';
+import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
+import 'package:taskify_app/core/widget/inputs/app_textfield.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() =>
+      _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState
+    extends ConsumerState<ForgotPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
   @override
@@ -28,6 +35,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final themeColor = AppColors.primary;
+    final authState = ref.watch(authProvider);
+
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      if (next.error != null) {
+        AppSnackBar.error(context, next.error!);
+      }
+    });
 
     return Scaffold(
       backgroundColor: themeColor,
@@ -45,7 +59,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
           ),
-
           Positioned(
             top: -70,
             right: -80,
@@ -58,13 +71,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
           ),
-
           SafeArea(
             bottom: false,
             child: Column(
               children: [
                 const SizedBox(height: AppSpacing.lg),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
@@ -79,26 +90,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: AppSpacing.md),
-
                 const Icon(
                   Icons.lock_reset_rounded,
                   size: 46,
                   color: Colors.white,
                 ),
-
                 const SizedBox(height: AppSpacing.md),
-
                 Text(
                   "Forgot Password",
                   style: AppTypography.heading2.copyWith(
                     color: Colors.white,
                   ),
                 ),
-
                 const SizedBox(height: 6),
-
                 Text(
                   "Enter your email to receive an OTP",
                   textAlign: TextAlign.center,
@@ -106,9 +111,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     color: Colors.white.withValues(alpha: .85),
                   ),
                 ),
-
                 const SizedBox(height: AppSpacing.xl),
-
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -120,51 +123,64 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppTextField(
-                            controller: _emailController,
-                            label: "Email",
-                            hintText: "jhondoe@gmail.com",
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-
-                          const SizedBox(height: AppSpacing.sm),
-
-                          Text(
-                            "We'll send a 6-digit verification code to your email.",
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: AppColors.textMuted,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppTextField(
+                              controller: _emailController,
+                              label: "Email",
+                              hintText: "jhondoe@gmail.com",
+                              keyboardType: TextInputType.emailAddress,
+                              validator: Validators.email,
                             ),
-                          ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              "We'll send a 6-digit verification code to your email.",
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: AppColors.textMuted,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xxl),
+                            AppButton(
+                              text: "Send OTP",
+                              backgroundColor: themeColor,
+                              height: 52,
+                              borderRadius: 14,
+                              isLoading: authState.isLoading,
+                              onPressed: () async {
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
 
-                          const SizedBox(height: AppSpacing.xxl),
+                                final email = _emailController.text.trim();
+                                final success = await ref
+                                    .read(authProvider.notifier)
+                                    .forgotPassword(AuthEntity(email: email));
 
-                          AppButton(
-                            text: "Send OTP",
-                            backgroundColor: themeColor,
-                            height: 52,
-                            borderRadius: 14,
-                            onPressed: () {
-                              context.push(AppRoutes.verifyOtp);
-                            },
-                          ),
-
-                          const SizedBox(height: AppSpacing.lg),
-
-                          Center(
-                            child: GestureDetector(
-                              onTap: () => context.pop(),
-                              child: Text(
-                                "Back to Login",
-                                style: AppTypography.labelMedium.copyWith(
-                                  color: themeColor,
+                                if (success && context.mounted) {
+                                  AppSnackBar.success(
+                                      context, "OTP sent to $email");
+                                  context.push(AppRoutes.verifyOtp,
+                                      extra: email);
+                                }
+                              },
+                            ),
+                            const SizedBox(height: AppSpacing.lg),
+                            Center(
+                              child: GestureDetector(
+                                onTap: () => context.pop(),
+                                child: Text(
+                                  "Back to Login",
+                                  style: AppTypography.labelMedium.copyWith(
+                                    color: themeColor,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
