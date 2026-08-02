@@ -103,7 +103,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     try {
       await _repository.register(auth);
-
       state = state.copyWith(
         isLoading: false,
         successMessage: "Registered successfully! Please verify your email.",

@@ -9,17 +9,30 @@ class AuthRemoteDatasource {
 
   /// POST /auth/register
   Future<void> register(AuthModel auth) async {
+    final email = auth.email?.trim().toLowerCase();
+    final userName = auth.userName?.trim();
+
     final payload = {
-      'firstName': auth.firstName,
-      'lastName': auth.lastName,
-      'email': auth.email,
-      'userName':
-          auth.userName ??
-          auth.email?.split('@').first ??
-          'user_${DateTime.now().millisecondsSinceEpoch}',
+      'firstName': auth.firstName?.trim(),
+      'lastName': auth.lastName?.trim(),
+      'email': email,
+      'userName': userName != null && userName.isNotEmpty
+          ? userName
+          : _usernameFromEmail(email),
       'password': auth.password,
     };
     await _api.post(ApiConstants.register, data: payload);
+  }
+
+  String _usernameFromEmail(String? email) {
+    final localPart = email?.split('@').first ?? '';
+    final cleaned = localPart.replaceAll(RegExp(r'[^a-zA-Z0-9_.]'), '_');
+
+    if (cleaned.length >= 3) {
+      return cleaned.length > 30 ? cleaned.substring(0, 30) : cleaned;
+    }
+
+    return 'user_${DateTime.now().millisecondsSinceEpoch}';
   }
 
   /// POST /auth/login

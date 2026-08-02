@@ -168,6 +168,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               controller: _usernameController,
                               label: "Username (optional)",
                               hintText: "shivabhusal",
+                              validator: Validators.username,
                             ),
                             const SizedBox(height: AppSpacing.md),
                             AppPasswordField(
@@ -201,15 +202,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 }
 
                                 final email = _emailController.text.trim();
+                                final username = _usernameController.text
+                                    .trim();
                                 final auth = AuthEntity(
                                   firstName: _firstNameController.text.trim(),
                                   lastName: _lastNameController.text.trim(),
                                   email: email,
-                                  userName: _usernameController.text
-                                          .trim()
-                                          .isNotEmpty
-                                      ? _usernameController.text.trim()
-                                      : email.split('@').first,
+                                  userName: username.isNotEmpty
+                                      ? username
+                                      : _usernameFromEmail(email),
                                   password: _passwordController.text.trim(),
                                 );
 
@@ -284,5 +285,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         ],
       ),
     );
+  }
+
+  String _usernameFromEmail(String email) {
+    final localPart = email.split('@').first;
+    final cleaned = localPart.replaceAll(RegExp(r'[^a-zA-Z0-9_.]'), '_');
+
+    if (cleaned.length >= 3) {
+      return cleaned.length > 30 ? cleaned.substring(0, 30) : cleaned;
+    }
+
+    return 'user_${DateTime.now().millisecondsSinceEpoch}';
   }
 }
