@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskify_app/core/network/api_constant.dart';
 import 'package:taskify_app/core/network/auth_interceptor.dart';
-import 'package:taskify_app/core/network/network_logger_interceptor.dart';
 import 'package:taskify_app/core/storage/token_storage.dart';
 import '../constants/app_constants.dart';
 
@@ -26,23 +25,8 @@ final dioProvider = Provider<Dio>((ref) {
     ),
   );
 
-  // 1. Auth Interceptor to attach Bearer token
+  // Auth Interceptor to attach Bearer token
   dio.interceptors.add(AuthInterceptor(tokenStorage));
-
-  // 2. Yellow Toast Logger Interceptor to display floating yellow toasts on API hits/responses
-  dio.interceptors.add(NetworkLoggerInterceptor());
-
-  // 3. Console Log Interceptor for debugging
-  dio.interceptors.add(
-    LogInterceptor(
-      request: true,
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
-    ),
-  );
 
   return dio;
 });

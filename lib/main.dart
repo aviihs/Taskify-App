@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/design_system/design_system.dart';
-import 'core/network/scaffold_messenger_key.dart';
 import 'router/app_router.dart';
 
 void main() {
@@ -22,7 +21,6 @@ class TaskifyApp extends StatelessWidget {
       valueListenable: themeModeNotifier,
       builder: (context, mode, child) {
         return MaterialApp.router(
-          scaffoldMessengerKey: rootScaffoldMessengerKey,
           title: 'Taskify',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,

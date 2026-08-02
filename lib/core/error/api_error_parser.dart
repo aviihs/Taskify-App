@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 class ApiFailure {
   final String message;
 
@@ -6,13 +8,27 @@ class ApiFailure {
   });
 }
 
-
 class ApiErrorParser {
-
   static ApiFailure parse(dynamic error) {
-
     if (error is ApiFailure) {
       return error;
+    }
+
+    if (error is DioException) {
+      String? errorMessage;
+
+      if (error.response?.data != null) {
+        final data = error.response!.data;
+        if (data is Map) {
+          errorMessage = data['message']?.toString() ?? data['error']?.toString();
+        } else if (data is String) {
+          errorMessage = data;
+        }
+      }
+
+      errorMessage ??= error.message;
+      errorMessage ??= 'Something went wrong. Please try again.';
+      return ApiFailure(message: errorMessage);
     }
 
     return ApiFailure(
