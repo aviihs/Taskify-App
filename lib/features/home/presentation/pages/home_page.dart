@@ -15,6 +15,18 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(authProvider);
+    final user = state.user;
+
+    if (user == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          context.go(AppRoutes.login);
+        }
+      });
+
+      return const Scaffold(body: SizedBox.shrink());
+    }
+
     return Scaffold(
       appBar: const AppAppBar(title: AppConstants.appName),
       body: Center(
@@ -31,7 +43,7 @@ class HomePage extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  "Hi ${state.user!.firstName}",
+                  "Hi ${user.firstName ?? user.userName ?? 'there'}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: AppSpacing.xs),
