@@ -81,8 +81,9 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
           CircleAvatar(
             radius: 55,
             backgroundColor: AppColors.primary.withValues(alpha: .15),
-            backgroundImage:
-                _profileImage != null ? FileImage(_profileImage!) : null,
+            backgroundImage: _profileImage != null
+                ? FileImage(_profileImage!)
+                : null,
             child: _profileImage == null
                 ? const Icon(Icons.person, size: 55, color: AppColors.primary)
                 : null,
@@ -113,6 +114,13 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
   Widget build(BuildContext context) {
     final themeColor = AppColors.primary;
     final authState = ref.watch(authProvider);
+
+    final user = ref.watch(authProvider).user;
+
+    if (user != null && _nameController.text.isEmpty) {
+      _nameController.text = "${user.firstName ?? ''} ${user.lastName ?? ''}"
+          .trim();
+    }
 
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next.error != null) {
@@ -207,8 +215,7 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                           const SizedBox(height: AppSpacing.xl),
                           AppTextField(
                             controller: _nameController,
-                            label: "Full Name",
-                            hintText: "Shiva Bhusal",
+                            readOnly: true,
                           ),
                           const SizedBox(height: AppSpacing.md),
                           AppDatePicker(
@@ -314,8 +321,9 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                             borderRadius: 14,
                             isLoading: authState.isLoading,
                             onPressed: () async {
-                              final phoneNum =
-                                  num.tryParse(_phoneController.text.trim());
+                              final phoneNum = num.tryParse(
+                                _phoneController.text.trim(),
+                              );
                               final dobFormatted = _selectedDob
                                   ?.toIso8601String()
                                   .split('T')
@@ -335,9 +343,11 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                               if (context.mounted) {
                                 if (success) {
                                   AppSnackBar.success(
-                                      context, "Profile updated successfully!");
+                                    context,
+                                    "Profile updated successfully!",
+                                  );
                                 }
-                                context.go(AppRoutes.home);
+                                context.go(AppRoutes.login);
                               }
                             },
                           ),
