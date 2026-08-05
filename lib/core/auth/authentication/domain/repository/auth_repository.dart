@@ -15,7 +15,7 @@ abstract class AuthRepository {
 
   Future<void> changePassword(AuthEntity auth);
 
-  Future<void> verifyEmail(AuthEntity auth);
+  Future<AuthEntity> verifyEmail(AuthEntity auth);
 
   Future<void> resendOtp(AuthEntity auth);
 

@@ -53,7 +53,7 @@ class AuthRemoteDatasource {
   Future<AuthModel> refreshToken(String refreshToken) async {
     final response = await _api.post(
       ApiConstants.refreshToken,
-      data: {'refreshToken': refreshToken},
+      data: {'token': refreshToken},
     );
     final Map<String, dynamic> jsonResponse = response is Map
         ? Map<String, dynamic>.from(response)
@@ -63,7 +63,7 @@ class AuthRemoteDatasource {
 
   /// POST /auth/logout
   Future<void> logout(String refreshToken) async {
-    await _api.post(ApiConstants.logout, data: {'refreshToken': refreshToken});
+    await _api.post(ApiConstants.logout, data: {'token': refreshToken});
   }
 
   /// POST /auth/forgot-password
@@ -94,11 +94,15 @@ class AuthRemoteDatasource {
   }
 
   /// POST /auth/verify-email
-  Future<void> verifyEmail(AuthModel auth) async {
-    await _api.post(
+  Future<AuthModel> verifyEmail(AuthModel auth) async {
+    final response = await _api.post(
       ApiConstants.verifyEmail,
       data: {'email': auth.email, 'otp': auth.otp},
     );
+    final Map<String, dynamic> jsonResponse = response is Map
+        ? Map<String, dynamic>.from(response)
+        : <String, dynamic>{};
+    return AuthModel.fromJson(jsonResponse);
   }
 
   /// POST /auth/resend-otp

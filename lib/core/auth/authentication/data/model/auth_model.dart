@@ -69,32 +69,34 @@ class AuthModel {
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     // Handle nested 'user' object if returned by login endpoint
-    final userMap = json['user'] is Map<String, dynamic>
-        ? json['user'] as Map<String, dynamic>
-        : (json['data'] is Map<String, dynamic>
-            ? json['data'] as Map<String, dynamic>
-            : json);
+    final nestedUser = json['user'];
+    final nestedData = json['data'];
+    final userMap = nestedUser is Map
+        ? Map<String, dynamic>.from(nestedUser)
+        : nestedData is Map
+        ? Map<String, dynamic>.from(nestedData)
+        : json;
 
     return AuthModel(
-      id: (userMap['_id'] ?? userMap['id']) as String?,
-      firstName: userMap['firstName'] as String?,
-      lastName: userMap['lastName'] as String?,
-      email: userMap['email'] as String?,
-      userName: userMap['userName'] as String?,
-      dob: userMap['dob'] as String?,
-      gender: userMap['gender'] as String?,
-      bio: userMap['bio'] as String?,
+      id: (userMap['_id'] ?? userMap['id'])?.toString(),
+      firstName: userMap['firstName']?.toString(),
+      lastName: userMap['lastName']?.toString(),
+      email: userMap['email']?.toString(),
+      userName: userMap['userName']?.toString(),
+      dob: userMap['dob']?.toString(),
+      gender: userMap['gender']?.toString(),
+      bio: userMap['bio']?.toString(),
       phone: userMap['phone'] as num?,
-      password: json['password'] as String?,
-      currentPassword: json['currentPassword'] as String?,
-      newPassword: json['newPassword'] as String?,
-      avatar: userMap['avatar'] as String?,
+      password: json['password']?.toString(),
+      currentPassword: json['currentPassword']?.toString(),
+      newPassword: json['newPassword']?.toString(),
+      avatar: userMap['avatar']?.toString(),
       isEmailVerified: userMap['isEmailVerified'] as bool?,
       isActive: userMap['isActive'] as bool?,
-      token: (json['accessToken'] ?? json['token']) as String?,
-      accessToken: (json['accessToken'] ?? json['token']) as String?,
-      refreshToken: json['refreshToken'] as String?,
-      otp: json['otp'] as String?,
+      token: (json['accessToken'] ?? json['token'])?.toString(),
+      accessToken: (json['accessToken'] ?? json['token'])?.toString(),
+      refreshToken: json['refreshToken']?.toString(),
+      otp: json['otp']?.toString(),
     );
   }
 
@@ -124,6 +126,7 @@ class AuthModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    if (id != null) map['id'] = id;
     if (firstName != null) map['firstName'] = firstName;
     if (lastName != null) map['lastName'] = lastName;
     if (email != null) map['email'] = email;
