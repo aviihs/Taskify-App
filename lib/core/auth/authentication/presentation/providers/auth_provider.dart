@@ -13,9 +13,7 @@ import 'package:taskify_app/core/storage/token_storage.dart';
 
 // Remote Datasource Provider
 final authRemoteDatasourceProvider = Provider<AuthRemoteDatasource>((ref) {
-  return AuthRemoteDatasource(
-    ref.watch(apiClientProvider),
-  );
+  return AuthRemoteDatasource(ref.watch(apiClientProvider));
 });
 
 // Repository Provider
@@ -76,7 +74,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final AuthRepository _repository;
   final TokenStorage _tokenStorage;
 
-  AuthNotifier(this._repository, this._tokenStorage) : super(const AuthState()) {
+  AuthNotifier(this._repository, this._tokenStorage)
+    : super(const AuthState()) {
     checkAuthStatus();
   }
 
@@ -86,10 +85,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final userJson = await _tokenStorage.getUserJson();
     if (token != null && userJson != null) {
       final model = AuthModel.fromJson(userJson);
-      state = state.copyWith(
-        token: token,
-        user: model.toEntity(),
-      );
+      state = state.copyWith(token: token, user: model.toEntity());
     }
   }
 
@@ -105,6 +101,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _repository.register(auth);
       state = state.copyWith(
         isLoading: false,
+        user: auth,
         successMessage: "Registered successfully! Please verify your email.",
       );
 
@@ -112,10 +109,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -150,10 +144,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -164,39 +155,26 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final user = await _repository.refreshToken();
 
-      state = state.copyWith(
-        user: user,
-        token: user.token,
-      );
+      state = state.copyWith(token: user.token);
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        error: failure.message,
-      );
+      state = state.copyWith(error: failure.message);
     }
   }
 
   // Logout
   Future<void> logout([AuthEntity? auth]) async {
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
+    state = state.copyWith(isLoading: true, clearError: true);
 
     try {
       await _repository.logout(auth ?? const AuthEntity());
 
-      state = const AuthState(
-        successMessage: "Logout successful",
-      );
+      state = const AuthState(successMessage: "Logout successful");
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
     }
   }
 
@@ -220,10 +198,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -249,10 +224,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -278,10 +250,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -296,10 +265,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
         clearSuccess: true,
       );
 
-      await _repository.verifyEmail(auth);
+      final user = await _repository.verifyEmail(auth);
 
       state = state.copyWith(
         isLoading: false,
+        user: user,
+        token: user.token,
         successMessage: "Email verified successfully",
       );
 
@@ -307,10 +278,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -336,10 +304,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }
@@ -359,6 +324,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(
         isLoading: false,
         user: updatedUser,
+        token: updatedUser.token ?? state.token,
         successMessage: "Profile updated successfully",
       );
 
@@ -366,10 +332,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.message,
-      );
+      state = state.copyWith(isLoading: false, error: failure.message);
 
       return false;
     }

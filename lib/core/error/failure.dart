@@ -2,23 +2,20 @@ class Failure implements Exception {
   final String message;
   final int? statusCode;
 
-  const Failure({
-    required this.message,
-    this.statusCode,
-  });
+  const Failure({required this.message, this.statusCode});
 
   @override
   String toString() => message;
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure(String message, {int? statusCode})
-      : super(message: message, statusCode: statusCode);
+  const ServerFailure(String message, {super.statusCode})
+    : super(message: message);
 }
 
 class CacheFailure extends Failure {
-  const CacheFailure(String message, {int? statusCode})
-      : super(message: message, statusCode: statusCode);
+  const CacheFailure(String message, {super.statusCode})
+    : super(message: message);
 }
 
 class NetworkFailure extends Failure {
@@ -29,11 +26,11 @@ class NetworkFailure extends Failure {
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure(String message, {int? statusCode})
-      : super(message: message, statusCode: statusCode);
+  const ValidationFailure(String message, {super.statusCode})
+    : super(message: message);
 }
 
 class AuthenticationFailure extends Failure {
-  const AuthenticationFailure(String message, {int? statusCode})
-      : super(message: message, statusCode: statusCode);
+  const AuthenticationFailure(String message, {super.statusCode})
+    : super(message: message);
 }

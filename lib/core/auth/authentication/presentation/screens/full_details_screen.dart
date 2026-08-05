@@ -38,17 +38,38 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final user = ref.read(authProvider).user;
-      if (user != null) {
-        if (user.firstName != null || user.lastName != null) {
-          _nameController.text =
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-        }
-        if (user.bio != null) _bioController.text = user.bio!;
-        if (user.phone != null) _phoneController.text = user.phone.toString();
-        if (user.gender != null) _selectedGender = user.gender;
-      }
+      _syncUserDetails(ref.read(authProvider).user);
     });
+  }
+
+  String _fullNameFrom(AuthEntity user) {
+    return [user.firstName, user.lastName]
+        .where((name) => name != null && name.trim().isNotEmpty)
+        .map((name) => name!.trim())
+        .join(' ');
+  }
+
+  void _syncUserDetails(AuthEntity? user) {
+    if (user == null || !mounted) return;
+
+    final fullName = _fullNameFrom(user);
+    if (fullName.isNotEmpty && _nameController.text != fullName) {
+      _nameController.text = fullName;
+    }
+
+    if (user.bio != null && _bioController.text.isEmpty) {
+      _bioController.text = user.bio!;
+    }
+
+    if (user.phone != null && _phoneController.text.isEmpty) {
+      _phoneController.text = user.phone.toString();
+    }
+
+    if (user.gender != null && _selectedGender == null) {
+      setState(() {
+        _selectedGender = user.gender;
+      });
+    }
   }
 
   @override
@@ -115,14 +136,11 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
     final themeColor = AppColors.primary;
     final authState = ref.watch(authProvider);
 
-    final user = ref.watch(authProvider).user;
-
-    if (user != null && _nameController.text.isEmpty) {
-      _nameController.text = "${user.firstName ?? ''} ${user.lastName ?? ''}"
-          .trim();
-    }
-
     ref.listen<AuthState>(authProvider, (previous, next) {
+      if (previous?.user != next.user) {
+        _syncUserDetails(next.user);
+      }
+
       if (next.error != null) {
         AppSnackBar.error(context, next.error!);
       }
@@ -216,6 +234,7 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                           AppTextField(
                             controller: _nameController,
                             readOnly: true,
+                            label: "Full Name",
                           ),
                           const SizedBox(height: AppSpacing.md),
                           AppDatePicker(
@@ -346,8 +365,8 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                                     context,
                                     "Profile updated successfully!",
                                   );
+                                  context.go(AppRoutes.home);
                                 }
-                                context.go(AppRoutes.login);
                               }
                             },
                           ),

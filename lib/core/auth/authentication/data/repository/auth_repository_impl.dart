@@ -74,8 +74,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> verifyEmail(AuthEntity auth) async {
-    await _remote.verifyEmail(AuthModel.fromEntity(auth));
+  Future<AuthEntity> verifyEmail(AuthEntity auth) async {
+    final model = await _remote.verifyEmail(AuthModel.fromEntity(auth));
+
+    if (model.accessToken != null && model.accessToken!.isNotEmpty) {
+      await _tokenStorage.saveTokens(
+        accessToken: model.accessToken!,
+        refreshToken: model.refreshToken,
+      );
+      await _tokenStorage.saveUserJson(model.toJson());
+    }
+
+    return model.toEntity();
   }
 
   @override
@@ -86,7 +96,14 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthEntity> updateProfile(AuthEntity auth) async {
     final model = await _remote.updateProfile(AuthModel.fromEntity(auth));
-    await _tokenStorage.saveUserJson(model.toJson());
-    return model.toEntity();
+    final currentUserJson = await _tokenStorage.getUserJson();
+    final mergedUserJson = <String, dynamic>{
+      if (currentUserJson != null) ...currentUserJson,
+      ...model.toJson(),
+    };
+
+    await _tokenStorage.saveUserJson(mergedUserJson);
+
+    return AuthModel.fromJson(mergedUserJson).toEntity();
   }
 }

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/auth/authentication/presentation/providers/auth_provider.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widget/app_components.dart';
 import '../../../../router/routes/app_routes.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: const AppAppBar(
-        title: AppConstants.appName,
-      ),
+      appBar: const AppAppBar(title: AppConstants.appName),
       body: Center(
         child: Padding(
           padding: AppSpacing.screenPadding,
@@ -42,10 +42,10 @@ class HomePage extends StatelessWidget {
                 AppButton(
                   text: 'Logout',
                   useGradient: true,
-                  onPressed: () {
-                    
+                  onPressed: () async {
+                    await ref.read(authProvider.notifier).logout();
+                    if (!context.mounted) return;
                     context.go(AppRoutes.login);
-                    print('Logout button pressed');
                   },
                 ),
               ],
