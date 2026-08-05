@@ -15,11 +15,13 @@ class ShellProfilePage extends ConsumerWidget {
     required this.title,
     required this.subtitle,
     required this.icon,
+    this.showAdminPanelButton = false,
   });
 
   final String title;
   final String subtitle;
   final IconData icon;
+  final bool showAdminPanelButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +63,7 @@ class ShellProfilePage extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              if (isAdmin) ...[
+              if (showAdminPanelButton && isAdmin) ...[
                 const SizedBox(height: AppSpacing.xl),
                 AppButton(
                   text: 'Go To Admin Panel',

@@ -10,6 +10,7 @@ class ProfileScreen extends StatelessWidget {
       title: 'Profile',
       subtitle: 'Normal user workspace',
       icon: Icons.person_rounded,
+      showAdminPanelButton: true,
     );
   }
 }
