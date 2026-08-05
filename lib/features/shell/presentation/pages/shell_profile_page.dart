@@ -27,6 +27,7 @@ class ShellProfilePage extends ConsumerWidget {
     final user = auth.user;
     final name = user?.firstName ?? user?.userName ?? 'Taskify User';
     final email = user?.email ?? 'No email';
+    final isAdmin = user?.isAdmin ?? false;
 
     return Scaffold(
       appBar: AppAppBar(title: title),
@@ -60,6 +61,16 @@ class ShellProfilePage extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+              if (isAdmin) ...[
+                const SizedBox(height: AppSpacing.xl),
+                AppButton(
+                  text: 'Go To Admin Panel',
+                  icon: Icons.admin_panel_settings_sharp,
+                  useGradient: true,
+                  onPressed: () => context.go(AppRoutes.adminDashboard),
+                ),
+              ],
+
               const SizedBox(height: AppSpacing.xl),
               AppButton(
                 text: auth.isLoading ? 'Logging out...' : 'Logout',
