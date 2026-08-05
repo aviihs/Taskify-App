@@ -8,7 +8,8 @@ class ApiConstants {
   //   // defaultValue: 'http://192.168.100.192:3000',
   // );
 
-  static const String baseUrl = "https://taskify-nest.onrender.com";
+  // static const String baseUrl = "https://taskify-nest.onrender.com";
+  static const String baseUrl = "http://192.168.100.192:3000";
 
   // Auth
   static const String deleteAccount = "/auth/account";

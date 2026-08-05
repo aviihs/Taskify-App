@@ -136,6 +136,8 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
     final themeColor = AppColors.primary;
     final authState = ref.watch(authProvider);
 
+    final authEmail = authState.user?.isEmailVerified;
+
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous?.user != next.user) {
         _syncUserDetails(next.user);
@@ -293,9 +295,9 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.verified,
-                                  color: AppColors.success,
+                                  color: (authEmail ?? false) ? AppColors.success : AppColors.error,
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -304,11 +306,11 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Email Verified",
+                                        (authEmail ?? false) ? "Email Verified" : "Email Not Verified",
                                         style: AppTypography.labelMedium,
                                       ),
                                       Text(
-                                        "Your email has been verified",
+                                        authEmail ?? false ? "Your email has been verified" : "Your email has not been verified",
                                         style: AppTypography.bodyMedium,
                                       ),
                                     ],

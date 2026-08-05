@@ -85,6 +85,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final userJson = await _tokenStorage.getUserJson();
     if (token != null && userJson != null) {
       final model = AuthModel.fromJson(userJson);
+      if (model.id == null) {
+        await _tokenStorage.clearAll();
+        state = const AuthState();
+        return;
+      }
+
       state = state.copyWith(token: token, user: model.toEntity());
     }
   }
@@ -159,13 +165,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (error) {
       final failure = ApiErrorParser.parse(error);
 
-      state = state.copyWith(error: failure.message);
+      await _tokenStorage.clearAll();
+      state = AuthState(error: failure.message);
     }
   }
 
   // Logout
   Future<void> logout([AuthEntity? auth]) async {
     state = state.copyWith(isLoading: true, clearError: true);
+    state = const AuthState();
 
     try {
       await _repository.logout(auth ?? const AuthEntity());
