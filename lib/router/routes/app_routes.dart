@@ -6,6 +6,10 @@ class AppRoutes {
   static const String third = '/third';
   static const String profile = '/profile';
   static const String add = '/add';
+  static const String adminDashboard = '/admin';
+  static const String adminUsers = '/admin/users';
+  static const String adminTasks = '/admin/tasks';
+  static const String adminSettings = '/admin/settings';
   static const String login = '/login';
   static const String register = '/register';
   static const String otpScreen = '/otp-screen';

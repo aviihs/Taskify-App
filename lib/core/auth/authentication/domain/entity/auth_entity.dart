@@ -12,6 +12,7 @@ class AuthEntity {
   final String? currentPassword;
   final String? newPassword;
   final String? avatar;
+  final String? role;
   final bool? isEmailVerified;
   final bool? isActive;
   final String? token;
@@ -33,6 +34,7 @@ class AuthEntity {
     this.currentPassword,
     this.newPassword,
     this.avatar,
+    this.role,
     this.isEmailVerified,
     this.isActive,
     this.token,
@@ -40,4 +42,6 @@ class AuthEntity {
     this.refreshToken,
     this.otp,
   });
+
+  bool get isAdmin => role?.toUpperCase() == 'ADMIN';
 }

@@ -3,6 +3,10 @@ import 'package:taskify_app/core/auth/authentication/presentation/screens/forgot
 import 'package:taskify_app/core/auth/authentication/presentation/screens/full_details_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/otp_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/verify_otp_screen.dart';
+import 'package:taskify_app/features/admin/presentation/pages/admin_dashboard_page.dart';
+import 'package:taskify_app/features/admin/presentation/pages/admin_settings_page.dart';
+import 'package:taskify_app/features/admin/presentation/pages/admin_tasks_page.dart';
+import 'package:taskify_app/features/admin/presentation/pages/admin_users_page.dart';
 
 import 'routes/app_routes.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/login_screen.dart';
@@ -12,6 +16,7 @@ import 'package:taskify_app/features/shell/presentation/pages/first_screen.dart'
 import 'package:taskify_app/features/shell/presentation/pages/profile_screen.dart';
 import 'package:taskify_app/features/shell/presentation/pages/second_screen.dart';
 import 'package:taskify_app/features/shell/presentation/pages/third_screen.dart';
+import 'package:taskify_app/shell/admin_shell.dart';
 import 'package:taskify_app/shell/taskify_shell.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -24,6 +29,45 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.register,
       builder: (context, state) => const RegisterScreen(),
+    ),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return AdminShell(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.adminDashboard,
+              builder: (context, state) => const AdminDashboardPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.adminUsers,
+              builder: (context, state) => const AdminUsersPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.adminTasks,
+              builder: (context, state) => const AdminTasksPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.adminSettings,
+              builder: (context, state) => const AdminSettingsPage(),
+            ),
+          ],
+        ),
+      ],
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

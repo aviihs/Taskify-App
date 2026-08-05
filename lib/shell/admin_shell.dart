@@ -7,8 +7,8 @@ import 'package:taskify_app/router/routes/app_routes.dart';
 import 'package:taskify_app/shell/shell_bottom_nav.dart';
 import 'package:taskify_app/shell/shell_center_fab.dart';
 
-class TaskifyShell extends StatelessWidget {
-  const TaskifyShell({super.key, required this.navigationShell});
+class AdminShell extends StatelessWidget {
+  const AdminShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
@@ -32,31 +32,32 @@ class TaskifyShell extends StatelessWidget {
         onTap: onTap,
         items: const [
           AppNavItem(
-            icon: Icons.dashboard_outlined,
-            activeIcon: Icons.dashboard_rounded,
-            label: 'First',
+            icon: Icons.space_dashboard_outlined,
+            activeIcon: Icons.space_dashboard_rounded,
+            label: 'Dashboard',
           ),
           AppNavItem(
-            icon: Icons.view_agenda_outlined,
-            activeIcon: Icons.view_agenda_rounded,
-            label: 'Second',
+            icon: Icons.group_outlined,
+            activeIcon: Icons.group_rounded,
+            label: 'Users',
           ),
           AppNavItem(
-            icon: Icons.calendar_month_outlined,
-            activeIcon: Icons.calendar_month_rounded,
-            label: 'Third',
+            icon: Icons.assignment_outlined,
+            activeIcon: Icons.assignment_rounded,
+            label: 'Tasks',
           ),
           AppNavItem(
-            icon: Icons.person_outline_rounded,
-            activeIcon: Icons.person_rounded,
-            label: 'Profile',
+            icon: Icons.tune_outlined,
+            activeIcon: Icons.tune_rounded,
+            label: 'Settings',
           ),
         ],
       ),
       floatingActionButton: ShellCenterFab(
-        icon: Icons.add_rounded,
-        tooltip: 'Add',
-        onPressed: () => context.push(AppRoutes.add),
+        heroTag: 'admin-shell-user-app-fab',
+        icon: Icons.apps_rounded,
+        tooltip: 'Open user app',
+        onPressed: () => context.go(AppRoutes.home),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

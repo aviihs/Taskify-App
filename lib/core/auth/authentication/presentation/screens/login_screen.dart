@@ -50,7 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (next.user != null && next.token != null) {
         AppSnackBar.success(context, "Login successful");
 
-        context.go(AppRoutes.home);
+        context.go(next.user!.isAdmin ? AppRoutes.adminDashboard : AppRoutes.home);
       }
     });
 

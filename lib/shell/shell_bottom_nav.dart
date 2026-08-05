@@ -34,32 +34,32 @@ class ShellBottomNav extends StatelessWidget {
         : AppColors.textMuted;
     final center = items.length ~/ 2;
 
-    return Container(
+    return BottomAppBar(
       height: AppUi.bottomNavHeight,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x10000000),
-            blurRadius: 16,
-            offset: Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          for (var index = 0; index < items.length; index++) ...[
-            Expanded(
-              child: _ShellNavTab(
-                item: items[index],
-                isSelected: index == currentIndex,
-                inactiveColor: inactiveColor,
-                onTap: () => onTap(index),
+      color: backgroundColor,
+      elevation: 14,
+      shadowColor: Colors.black.withValues(alpha: 0.16),
+      surfaceTintColor: Colors.transparent,
+      shape: const CircularNotchedRectangle(),
+      notchMargin: 8,
+      padding: EdgeInsets.zero,
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            for (var index = 0; index < items.length; index++) ...[
+              Expanded(
+                child: _ShellNavTab(
+                  item: items[index],
+                  isSelected: index == currentIndex,
+                  inactiveColor: inactiveColor,
+                  onTap: () => onTap(index),
+                ),
               ),
-            ),
-            if (index == center - 1) const SizedBox(width: 72),
+              if (index == center - 1) const SizedBox(width: 82),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -82,28 +82,41 @@ class _ShellNavTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = isSelected ? AppColors.primary : inactiveColor;
 
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            isSelected ? (item.activeIcon ?? item.icon) : item.icon,
-            color: color,
-            size: AppUi.iconMD,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 7),
+      child: Material(
+        color: isSelected
+            ? AppColors.primary.withValues(alpha: 0.08)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          hoverColor: AppColors.primary.withValues(alpha: 0.06),
+          splashColor: AppColors.primary.withValues(alpha: 0.12),
+          highlightColor: AppColors.primary.withValues(alpha: 0.08),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                isSelected ? (item.activeIcon ?? item.icon) : item.icon,
+                color: color,
+                size: AppUi.iconMD,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                item.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  color: color,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            item.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              color: color,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -14,6 +14,7 @@ class AuthModel {
   final String? currentPassword;
   final String? newPassword;
   final String? avatar;
+  final String? role;
   final bool? isEmailVerified;
   final bool? isActive;
   final String? token;
@@ -35,6 +36,7 @@ class AuthModel {
     this.currentPassword,
     this.newPassword,
     this.avatar,
+    this.role,
     this.isEmailVerified,
     this.isActive,
     this.token,
@@ -58,6 +60,7 @@ class AuthModel {
       currentPassword: entity.currentPassword,
       newPassword: entity.newPassword,
       avatar: entity.avatar,
+      role: entity.role,
       isEmailVerified: entity.isEmailVerified,
       isActive: entity.isActive,
       token: entity.token,
@@ -91,6 +94,7 @@ class AuthModel {
       currentPassword: json['currentPassword']?.toString(),
       newPassword: json['newPassword']?.toString(),
       avatar: userMap['avatar']?.toString(),
+      role: userMap['role']?.toString(),
       isEmailVerified: userMap['isEmailVerified'] as bool?,
       isActive: userMap['isActive'] as bool?,
       token: (json['accessToken'] ?? json['token'])?.toString(),
@@ -115,6 +119,7 @@ class AuthModel {
       currentPassword: currentPassword,
       newPassword: newPassword,
       avatar: avatar,
+      role: role,
       isEmailVerified: isEmailVerified,
       isActive: isActive,
       token: accessToken ?? token,
@@ -139,6 +144,7 @@ class AuthModel {
     if (currentPassword != null) map['currentPassword'] = currentPassword;
     if (newPassword != null) map['newPassword'] = newPassword;
     if (avatar != null) map['avatar'] = avatar;
+    if (role != null) map['role'] = role;
     if (isEmailVerified != null) map['isEmailVerified'] = isEmailVerified;
     if (isActive != null) map['isActive'] = isActive;
     if (accessToken != null) map['accessToken'] = accessToken;
@@ -162,6 +168,7 @@ class AuthModel {
     String? currentPassword,
     String? newPassword,
     String? avatar,
+    String? role,
     bool? isEmailVerified,
     bool? isActive,
     String? token,
@@ -183,6 +190,7 @@ class AuthModel {
       currentPassword: currentPassword ?? this.currentPassword,
       newPassword: newPassword ?? this.newPassword,
       avatar: avatar ?? this.avatar,
+      role: role ?? this.role,
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       isActive: isActive ?? this.isActive,
       token: token ?? this.token,
