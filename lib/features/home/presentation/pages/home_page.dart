@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -39,10 +40,12 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 AppButton(
-                  text: 'Go to login',
+                  text: 'Logout',
                   useGradient: true,
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.login);
+                    
+                    context.go(AppRoutes.login);
+                    print('Logout button pressed');
                   },
                 ),
               ],

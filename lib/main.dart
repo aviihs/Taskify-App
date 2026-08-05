@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/design_system/design_system.dart';
 import 'router/app_router.dart';
-import 'router/routes/app_routes.dart';
 
 void main() {
-  runApp(const TaskifyApp());
+  runApp(
+    const ProviderScope(
+      child: TaskifyApp(),
+    ),
+  );
 }
 
 class TaskifyApp extends StatelessWidget {

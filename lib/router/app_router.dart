@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/screens/forgot_password_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/full_details_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/otp_screen.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/screens/verify_otp_screen.dart';
 
 import 'routes/app_routes.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/login_screen.dart';
@@ -9,39 +11,40 @@ import 'package:taskify_app/features/home/presentation/pages/home_page.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.login,
-
   routes: [
     GoRoute(
       path: AppRoutes.login,
       builder: (context, state) => const LoginScreen(),
     ),
-
     GoRoute(
       path: AppRoutes.register,
       builder: (context, state) => const RegisterScreen(),
     ),
-
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) => const HomePage(),
     ),
-     GoRoute(
-      path: AppRoutes.otpScreen,
-      builder: (context, state) => const OtpScreen(),
-    ),
-
     GoRoute(
-  path: AppRoutes.fullDetails,
-  builder: (_, _) => const FullDetailsScreen(),
-),
-GoRoute(
-  path: AppRoutes.forgotPassword,
-  builder: (context, state) => const ForgotPasswordScreen(),
-),
-
-GoRoute(
-  path: AppRoutes.verifyOtp,
-  builder: (context, state) => const VerifyOtpScreen(),
-),
+      path: AppRoutes.otpScreen,
+      builder: (context, state) {
+        final email = state.extra as String?;
+        return OtpScreen(email: email);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.fullDetails,
+      builder: (_, _) => const FullDetailsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.forgotPassword,
+      builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.verifyOtp,
+      builder: (context, state) {
+        final email = state.extra as String?;
+        return VerifyOtpScreen(email: email);
+      },
+    ),
   ],
 );
