@@ -14,6 +14,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(authProvider);
     return Scaffold(
       appBar: const AppAppBar(title: AppConstants.appName),
       body: Center(
@@ -30,7 +31,7 @@ class HomePage extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  AppConstants.appName,
+                  "Hi ${state.user!.firstName}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: AppSpacing.xs),

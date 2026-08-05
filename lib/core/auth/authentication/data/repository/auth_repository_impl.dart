@@ -3,6 +3,7 @@ import 'package:taskify_app/core/auth/authentication/data/datasource/auth_remote
 import 'package:taskify_app/core/auth/authentication/data/model/auth_model.dart';
 import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.dart';
 import 'package:taskify_app/core/auth/authentication/domain/repository/auth_repository.dart';
+import 'package:taskify_app/core/error/failure.dart';
 import 'package:taskify_app/core/storage/token_storage.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -20,16 +21,21 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthEntity> login(AuthEntity auth) async {
     debugPrint("REPOSITORY LOGIN HIT: ${auth.email}");
 
+    await _tokenStorage.clearAll();
+
     final model = await _remote.login(AuthModel.fromEntity(auth));
 
-    // Save access & refresh tokens securely
-    if (model.accessToken != null && model.accessToken!.isNotEmpty) {
-      await _tokenStorage.saveTokens(
-        accessToken: model.accessToken!,
-        refreshToken: model.refreshToken,
-      );
-      await _tokenStorage.saveUserJson(model.toJson());
+    final accessToken = model.accessToken ?? model.token;
+    if (accessToken == null || accessToken.isEmpty || model.id == null) {
+      await _tokenStorage.clearAll();
+      throw const AuthenticationFailure('Invalid email or password');
     }
+
+    await _tokenStorage.saveTokens(
+      accessToken: accessToken,
+      refreshToken: model.refreshToken,
+    );
+    await _tokenStorage.saveUserJson(model.toJson());
 
     return model.toEntity();
   }
@@ -52,10 +58,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout(AuthEntity auth) async {
     final currentRefreshToken = await _tokenStorage.getRefreshToken() ?? '';
+    await _tokenStorage.clearAll();
+
+    if (currentRefreshToken.isEmpty) {
+      return;
+    }
+
     try {
       await _remote.logout(currentRefreshToken);
     } catch (_) {}
-    await _tokenStorage.clearAll();
   }
 
   @override

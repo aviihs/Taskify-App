@@ -6,6 +6,16 @@ import '../storage/token_storage.dart';
 class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _refreshDio;
+  static const Set<String> _publicAuthPaths = {
+    ApiConstants.login,
+    ApiConstants.register,
+    ApiConstants.refreshToken,
+    ApiConstants.logout,
+    ApiConstants.forgotPassword,
+    ApiConstants.resetPassword,
+    ApiConstants.verifyEmail,
+    ApiConstants.resendOtp,
+  };
 
   AuthInterceptor(this._tokenStorage)
     : _refreshDio = Dio(
@@ -23,6 +33,10 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    if (_publicAuthPaths.contains(options.path)) {
+      return super.onRequest(options, handler);
+    }
+
     final token = await _tokenStorage.getAccessToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -37,8 +51,11 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final statusCode = err.response?.statusCode;
     final hasRetried = err.requestOptions.extra['authRetry'] == true;
+    final isPublicAuthRequest = _publicAuthPaths.contains(
+      err.requestOptions.path,
+    );
 
-    if (statusCode != 401 || hasRetried) {
+    if (statusCode != 401 || hasRetried || isPublicAuthRequest) {
       return handler.next(err);
     }
 
