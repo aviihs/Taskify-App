@@ -9,7 +9,8 @@ class ThemeModeNotifier extends ValueNotifier<ThemeMode> {
   }
 
   void toggleTheme(BuildContext context) {
-    final isDark = value == ThemeMode.dark ||
+    final isDark =
+        value == ThemeMode.dark ||
         (value == ThemeMode.system &&
             MediaQuery.of(context).platformBrightness == Brightness.dark);
     value = isDark ? ThemeMode.light : ThemeMode.dark;

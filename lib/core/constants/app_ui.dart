@@ -92,20 +92,14 @@ class AppUi {
   // ===========================================================================
 
   static const OutlineInputBorder inputBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.all(
-      Radius.circular(borderRadius),
-    ),
+    borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
     borderSide: BorderSide.none,
   );
 
-  static OutlineInputBorder outlinedBorder(Color color) =>
-      OutlineInputBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-        borderSide: BorderSide(
-          color: color,
-          width: 1.2,
-        ),
-      );
+  static OutlineInputBorder outlinedBorder(Color color) => OutlineInputBorder(
+    borderRadius: BorderRadius.circular(borderRadius),
+    borderSide: BorderSide(color: color, width: 1.2),
+  );
 
   // ===========================================================================
   // Shadows
@@ -161,27 +155,19 @@ abstract final class AppShadows {
   static const List<BoxShadow> sm = card;
 
   static const List<BoxShadow> md = [
-    BoxShadow(
-      color: Color(0x0C000000),
-      blurRadius: 16,
-      offset: Offset(0, 4),
-    ),
+    BoxShadow(color: Color(0x0C000000), blurRadius: 16, offset: Offset(0, 4)),
   ];
 
   static const List<BoxShadow> lg = [
-    BoxShadow(
-      color: Color(0x10000000),
-      blurRadius: 24,
-      offset: Offset(0, 8),
-    ),
+    BoxShadow(color: Color(0x10000000), blurRadius: 24, offset: Offset(0, 8)),
   ];
 
   /// FAB / floating CTA — brand-colored, very subtle.
   static List<BoxShadow> primaryGlow(Color primary) => [
-        BoxShadow(
-          color: primary.withValues(alpha: 0.22),
-          blurRadius: 16,
-          offset: const Offset(0, 4),
-        ),
-      ];
+    BoxShadow(
+      color: primary.withValues(alpha: 0.22),
+      blurRadius: 16,
+      offset: const Offset(0, 4),
+    ),
+  ];
 }

@@ -98,14 +98,17 @@ class AppDrawer extends StatelessWidget {
                       color: item.isSelected
                           ? AppColors.primary
                           : AppColors.textPrimary,
-                      fontWeight:
-                          item.isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: item.isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
                   ),
                   trailing: item.badgeText != null
                       ? Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),

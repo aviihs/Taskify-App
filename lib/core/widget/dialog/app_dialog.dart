@@ -60,8 +60,8 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveIconColor = iconColor ??
-        (isDanger ? AppColors.error : AppColors.primary);
+    final effectiveIconColor =
+        iconColor ?? (isDanger ? AppColors.error : AppColors.primary);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -107,7 +107,9 @@ class AppDialog extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     text: confirmText,
-                    backgroundColor: isDanger ? AppColors.error : AppColors.primary,
+                    backgroundColor: isDanger
+                        ? AppColors.error
+                        : AppColors.primary,
                     onPressed: onConfirm ?? () => Navigator.of(context).pop(),
                   ),
                 ),

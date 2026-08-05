@@ -15,7 +15,7 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.automaticallyImplyLeading = true,
     this.backgroundColor,
     this.foregroundColor,
-    this.centerTitle = true,
+    this.centerTitle = false,
     this.elevation = 0,
     this.bottom,
   });
@@ -33,8 +33,8 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(
-        AppUi.appBarHeight + (bottom?.preferredSize.height ?? 0.0),
-      );
+    AppUi.appBarHeight + (bottom?.preferredSize.height ?? 0.0),
+  );
 
   @override
   Widget build(BuildContext context) {

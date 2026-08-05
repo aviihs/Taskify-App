@@ -21,8 +21,7 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
       _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState
-    extends ConsumerState<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
@@ -50,10 +49,7 @@ class _ForgotPasswordScreenState
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  AppColors.primaryDark,
-                  AppColors.primary,
-                ],
+                colors: [AppColors.primaryDark, AppColors.primary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -99,9 +95,7 @@ class _ForgotPasswordScreenState
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Forgot Password",
-                  style: AppTypography.heading2.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -161,9 +155,13 @@ class _ForgotPasswordScreenState
 
                                 if (success && context.mounted) {
                                   AppSnackBar.success(
-                                      context, "OTP sent to $email");
-                                  context.push(AppRoutes.verifyOtp,
-                                      extra: email);
+                                    context,
+                                    "OTP sent to $email",
+                                  );
+                                  context.push(
+                                    AppRoutes.verifyOtp,
+                                    extra: email,
+                                  );
                                 }
                               },
                             ),

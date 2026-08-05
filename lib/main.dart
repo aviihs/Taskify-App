@@ -5,11 +5,7 @@ import 'core/design_system/design_system.dart';
 import 'router/app_router.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: TaskifyApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: TaskifyApp()));
 }
 
 class TaskifyApp extends StatelessWidget {

@@ -75,7 +75,8 @@ class BrandTheme extends ThemeExtension<BrandTheme> {
       glassGradient: glassGradient ?? this.glassGradient,
       glassBorderColor: glassBorderColor ?? this.glassBorderColor,
       shimmerBaseColor: shimmerBaseColor ?? this.shimmerBaseColor,
-      shimmerHighlightColor: shimmerHighlightColor ?? this.shimmerHighlightColor,
+      shimmerHighlightColor:
+          shimmerHighlightColor ?? this.shimmerHighlightColor,
     );
   }
 
@@ -83,13 +84,33 @@ class BrandTheme extends ThemeExtension<BrandTheme> {
   BrandTheme lerp(ThemeExtension<BrandTheme>? other, double t) {
     if (other is! BrandTheme) return this;
     return BrandTheme(
-      primaryGradient: LinearGradient.lerp(primaryGradient, other.primaryGradient, t)!,
+      primaryGradient: LinearGradient.lerp(
+        primaryGradient,
+        other.primaryGradient,
+        t,
+      )!,
       heroGradient: LinearGradient.lerp(heroGradient, other.heroGradient, t)!,
       cardGradient: LinearGradient.lerp(cardGradient, other.cardGradient, t)!,
-      glassGradient: LinearGradient.lerp(glassGradient, other.glassGradient, t)!,
-      glassBorderColor: Color.lerp(glassBorderColor, other.glassBorderColor, t)!,
-      shimmerBaseColor: Color.lerp(shimmerBaseColor, other.shimmerBaseColor, t)!,
-      shimmerHighlightColor: Color.lerp(shimmerHighlightColor, other.shimmerHighlightColor, t)!,
+      glassGradient: LinearGradient.lerp(
+        glassGradient,
+        other.glassGradient,
+        t,
+      )!,
+      glassBorderColor: Color.lerp(
+        glassBorderColor,
+        other.glassBorderColor,
+        t,
+      )!,
+      shimmerBaseColor: Color.lerp(
+        shimmerBaseColor,
+        other.shimmerBaseColor,
+        t,
+      )!,
+      shimmerHighlightColor: Color.lerp(
+        shimmerHighlightColor,
+        other.shimmerHighlightColor,
+        t,
+      )!,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/shell/pages/shell_placeholder_page.dart';
+import 'package:taskify_app/features/shell/presentation/pages/shell_placeholder_page.dart';
 
 class AddPage extends StatelessWidget {
   const AddPage({super.key});

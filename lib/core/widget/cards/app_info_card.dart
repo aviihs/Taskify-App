@@ -75,11 +75,7 @@ class AppInfoCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon ?? defaultIcon,
-            color: iconColor,
-            size: AppUi.iconMD,
-          ),
+          Icon(icon ?? defaultIcon, color: iconColor, size: AppUi.iconMD),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(

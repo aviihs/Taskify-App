@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taskify_app/core/widget/buttons/app_fab.dart';
 
-class ProductCenterFab extends StatelessWidget {
-  const ProductCenterFab({
+class ShellCenterFab extends StatelessWidget {
+  const ShellCenterFab({
     super.key,
     required this.icon,
     required this.onPressed,

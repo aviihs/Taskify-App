@@ -84,7 +84,10 @@ class _AppSearchFieldState extends State<AppSearchField> {
               : null,
           filled: true,
           fillColor: AppColors.background,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppUi.borderRadius),
             borderSide: BorderSide.none,

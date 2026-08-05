@@ -36,7 +36,8 @@ class AppGlassCard extends StatelessWidget {
     final effectiveRadius = borderRadius ?? AppUi.cardRadius;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final border = borderColor ??
+    final border =
+        borderColor ??
         (isDark ? const Color(0x33FFFFFF) : const Color(0x66FFFFFF));
     final overlayColor = isDark ? Colors.black : Colors.white;
 

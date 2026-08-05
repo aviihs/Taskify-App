@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/widget/navigation/app_bottom_nav.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
-import 'package:taskify_app/shell/product_bottom_nav.dart';
-import 'package:taskify_app/shell/product_center_fab.dart';
+import 'package:taskify_app/shell/shell_bottom_nav.dart';
+import 'package:taskify_app/shell/shell_center_fab.dart';
 
 class TaskifyShell extends StatelessWidget {
   const TaskifyShell({super.key, required this.navigationShell});
@@ -26,7 +26,7 @@ class TaskifyShell extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       resizeToAvoidBottomInset: false,
       body: navigationShell,
-      bottomNavigationBar: ProductBottomNav(
+      bottomNavigationBar: ShellBottomNav(
         currentIndex: navigationShell.currentIndex,
         onTap: onTap,
         items: const [
@@ -52,7 +52,7 @@ class TaskifyShell extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: ProductCenterFab(
+      floatingActionButton: ShellCenterFab(
         icon: Icons.add_rounded,
         tooltip: 'Add',
         onPressed: () => context.push(AppRoutes.add),

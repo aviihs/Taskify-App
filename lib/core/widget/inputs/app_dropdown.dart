@@ -65,7 +65,10 @@ class AppDropdown<T> extends StatelessWidget {
               prefixIcon: prefixIcon,
               filled: true,
               fillColor: AppColors.background,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppUi.borderRadius),
                 borderSide: const BorderSide(color: AppColors.border),

@@ -34,9 +34,7 @@ class AppCheckbox extends StatelessWidget {
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           title,
-          style: AppTypography.bodyLarge.copyWith(
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w500),
         ),
         subtitle: subtitle != null
             ? Text(subtitle!, style: AppTypography.bodyMedium)

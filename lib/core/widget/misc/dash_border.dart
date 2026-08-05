@@ -75,10 +75,7 @@ class _DashBorderPainter extends CustomPainter {
         final double len = (distance + dashWidth < metric.length)
             ? dashWidth
             : metric.length - distance;
-        canvas.drawPath(
-          metric.extractPath(distance, distance + len),
-          paint,
-        );
+        canvas.drawPath(metric.extractPath(distance, distance + len), paint);
         distance += dashWidth + dashSpace;
       }
     }

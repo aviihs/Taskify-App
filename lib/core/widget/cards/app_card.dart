@@ -38,10 +38,10 @@ class AppCard extends StatelessWidget {
     final effectiveRadius = borderRadius ?? AppUi.cardRadius;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bg = backgroundColor ??
-        (isDark ? const Color(0xFF1E2235) : AppColors.card);
-    final border = borderColor ??
-        (isDark ? const Color(0xFF2A2E45) : AppColors.divider);
+    final bg =
+        backgroundColor ?? (isDark ? const Color(0xFF1E2235) : AppColors.card);
+    final border =
+        borderColor ?? (isDark ? const Color(0xFF2A2E45) : AppColors.divider);
 
     Widget container = Container(
       width: width,

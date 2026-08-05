@@ -12,7 +12,7 @@ abstract final class AppRadius {
   static const double full = 999;
 
   /// Unified radius for cards / buttons / inputs / search fields / chips
-  /// (RestroX-pattern design system, Step 2C/2D correction) — the single
+  /// The single
   /// tier every surface-level control resolves to. [sheet] (bottom-sheet
   /// top corners, 20) is a deliberate, separate exception, not this.
   static const double control = 8;
@@ -30,7 +30,9 @@ abstract final class AppRadius {
   static const BorderRadius xlBr = BorderRadius.all(Radius.circular(xl));
   static const BorderRadius xxlBr = BorderRadius.all(Radius.circular(xxl));
   static const BorderRadius cardBr = BorderRadius.all(Radius.circular(card));
-  static const BorderRadius controlBr = BorderRadius.all(Radius.circular(control));
+  static const BorderRadius controlBr = BorderRadius.all(
+    Radius.circular(control),
+  );
   static const BorderRadius sheetBr = BorderRadius.vertical(
     top: Radius.circular(sheet),
   );

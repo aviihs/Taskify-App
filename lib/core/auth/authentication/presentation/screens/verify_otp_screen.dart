@@ -249,14 +249,18 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
 
                               if (otp.length < 6) {
                                 AppSnackBar.warning(
-                                    context, "Please enter 6-digit OTP");
+                                  context,
+                                  "Please enter 6-digit OTP",
+                                );
                                 return;
                               }
 
                               if (_passwordController.text !=
                                   _confirmPasswordController.text) {
                                 AppSnackBar.error(
-                                    context, "Passwords do not match");
+                                  context,
+                                  "Passwords do not match",
+                                );
                                 return;
                               }
 
@@ -266,14 +270,16 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                                     AuthEntity(
                                       otp: otp,
                                       token: otp,
-                                      newPassword:
-                                          _passwordController.text.trim(),
+                                      newPassword: _passwordController.text
+                                          .trim(),
                                     ),
                                   );
 
                               if (success && context.mounted) {
-                                AppSnackBar.success(context,
-                                    "Password reset successful! Please login.");
+                                AppSnackBar.success(
+                                  context,
+                                  "Password reset successful! Please login.",
+                                );
                                 context.go(AppRoutes.login);
                               }
                             },

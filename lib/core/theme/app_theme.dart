@@ -126,10 +126,16 @@ class AppTheme {
     textTheme: TextTheme(
       headlineLarge: AppTypography.heading1.copyWith(color: Colors.white),
       headlineMedium: AppTypography.heading2.copyWith(color: Colors.white),
-      bodyLarge: AppTypography.bodyLarge.copyWith(color: const Color(0xFFD1D5DB)),
-      bodyMedium: AppTypography.bodyMedium.copyWith(color: const Color(0xFF9CA3AF)),
+      bodyLarge: AppTypography.bodyLarge.copyWith(
+        color: const Color(0xFFD1D5DB),
+      ),
+      bodyMedium: AppTypography.bodyMedium.copyWith(
+        color: const Color(0xFF9CA3AF),
+      ),
       labelLarge: AppTypography.buttonText,
-      labelMedium: AppTypography.labelMedium.copyWith(color: AppColors.primaryLight),
+      labelMedium: AppTypography.labelMedium.copyWith(
+        color: AppColors.primaryLight,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -173,7 +179,9 @@ class AppTheme {
         borderRadius: BorderRadius.circular(AppUi.borderRadius),
         borderSide: const BorderSide(color: AppColors.error, width: 1.5),
       ),
-      hintStyle: AppTypography.bodyMedium.copyWith(color: const Color(0xFF6B7280)),
+      hintStyle: AppTypography.bodyMedium.copyWith(
+        color: const Color(0xFF6B7280),
+      ),
     ),
     cardTheme: CardThemeData(
       color: const Color(0xFF1E2235),

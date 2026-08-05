@@ -297,7 +297,9 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                               children: [
                                 Icon(
                                   Icons.verified,
-                                  color: (authEmail ?? false) ? AppColors.success : AppColors.error,
+                                  color: (authEmail ?? false)
+                                      ? AppColors.success
+                                      : AppColors.error,
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -306,11 +308,15 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        (authEmail ?? false) ? "Email Verified" : "Email Not Verified",
+                                        (authEmail ?? false)
+                                            ? "Email Verified"
+                                            : "Email Not Verified",
                                         style: AppTypography.labelMedium,
                                       ),
                                       Text(
-                                        authEmail ?? false ? "Your email has been verified" : "Your email has not been verified",
+                                        authEmail ?? false
+                                            ? "Your email has been verified"
+                                            : "Your email has not been verified",
                                         style: AppTypography.bodyMedium,
                                       ),
                                     ],

@@ -38,7 +38,8 @@ class AppIconButton extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.surfaceVariant.withValues(alpha: 0.5),
+        color:
+            backgroundColor ?? AppColors.surfaceVariant.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(effectiveRadius),
         border: borderColor != null
             ? Border.all(color: borderColor!, width: 1.2)

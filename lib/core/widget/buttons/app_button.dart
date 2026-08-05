@@ -8,19 +8,19 @@ import '../../constants/app_ui.dart';
 /// Reusable primary button supporting icons, loading state, custom colors & gradients.
 class AppButton extends StatelessWidget {
   const AppButton({
-  super.key,
-  required this.text,
-  required this.onPressed,
-  this.isLoading = false,
-  this.isDisabled = false,
-  this.icon,
-  this.backgroundColor,
-  this.textColor,
-  this.height = AppUi.buttonHeight,
-  this.width,
-  this.useGradient = false,
-  this.borderRadius,
-});
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    this.isDisabled = false,
+    this.icon,
+    this.backgroundColor,
+    this.textColor,
+    this.height = AppUi.buttonHeight,
+    this.width,
+    this.useGradient = false,
+    this.borderRadius,
+  });
 
   final String text;
   final VoidCallback? onPressed;
@@ -56,11 +56,7 @@ class AppButton extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.sm),
         ] else if (icon != null) ...[
-          Icon(
-            icon,
-            size: AppUi.iconSM,
-            color: textColor ?? Colors.white,
-          ),
+          Icon(icon, size: AppUi.iconSM, color: textColor ?? Colors.white),
           const SizedBox(width: AppSpacing.sm),
         ],
         Text(

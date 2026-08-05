@@ -43,11 +43,10 @@ class AppSliverAppBar extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        background: flexibleSpaceBackground ??
+        background:
+            flexibleSpaceBackground ??
             Container(
-              decoration: const BoxDecoration(
-                gradient: AppGradients.hero,
-              ),
+              decoration: const BoxDecoration(gradient: AppGradients.hero),
             ),
       ),
     );

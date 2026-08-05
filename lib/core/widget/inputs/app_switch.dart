@@ -29,15 +29,15 @@ class AppSwitch extends StatelessWidget {
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,
-        activeTrackColor: (activeColor ?? AppColors.primary).withValues(alpha: 0.5),
+        activeTrackColor: (activeColor ?? AppColors.primary).withValues(
+          alpha: 0.5,
+        ),
         // ignore: deprecated_member_use
         activeColor: activeColor ?? AppColors.primary,
         contentPadding: EdgeInsets.zero,
         title: Text(
           title,
-          style: AppTypography.bodyLarge.copyWith(
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w500),
         ),
         subtitle: subtitle != null
             ? Text(subtitle!, style: AppTypography.bodyMedium)

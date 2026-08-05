@@ -81,10 +81,7 @@ class AppBottomSheet extends StatelessWidget {
               const Divider(height: 1),
             ],
             Flexible(
-              child: SingleChildScrollView(
-                padding: padding,
-                child: child,
-              ),
+              child: SingleChildScrollView(padding: padding, child: child),
             ),
           ],
         ),

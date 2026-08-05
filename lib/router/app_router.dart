@@ -7,11 +7,11 @@ import 'package:taskify_app/core/auth/authentication/presentation/screens/verify
 import 'routes/app_routes.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/login_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/register_screen.dart';
-import 'package:taskify_app/shell/pages/add_page.dart';
-import 'package:taskify_app/shell/pages/first_screen.dart';
-import 'package:taskify_app/shell/pages/profile_screen.dart';
-import 'package:taskify_app/shell/pages/second_screen.dart';
-import 'package:taskify_app/shell/pages/third_screen.dart';
+import 'package:taskify_app/features/shell/presentation/pages/add_page.dart';
+import 'package:taskify_app/features/shell/presentation/pages/first_screen.dart';
+import 'package:taskify_app/features/shell/presentation/pages/profile_screen.dart';
+import 'package:taskify_app/features/shell/presentation/pages/second_screen.dart';
+import 'package:taskify_app/features/shell/presentation/pages/third_screen.dart';
 import 'package:taskify_app/shell/taskify_shell.dart';
 
 final GoRouter appRouter = GoRouter(

@@ -39,10 +39,11 @@ class AppBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = backgroundColor ??
-        (isDark ? const Color(0xFF1E2235) : Colors.white);
+    final bg =
+        backgroundColor ?? (isDark ? const Color(0xFF1E2235) : Colors.white);
     final activeColor = selectedItemColor ?? AppColors.primary;
-    final inactiveColor = unselectedItemColor ??
+    final inactiveColor =
+        unselectedItemColor ??
         (isDark ? const Color(0xFF6B7280) : AppColors.textMuted);
 
     return Container(
@@ -109,7 +110,9 @@ class AppBottomNav extends StatelessWidget {
                     item.label,
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
                       color: isSelected ? activeColor : inactiveColor,
                     ),
                   ),

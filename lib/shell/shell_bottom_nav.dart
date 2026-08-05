@@ -3,23 +3,23 @@ import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
 import 'package:taskify_app/core/widget/navigation/app_bottom_nav.dart';
 
-class ProductBottomNav extends StatelessWidget {
-  const ProductBottomNav({
+class ShellBottomNav extends StatelessWidget {
+  const ShellBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
     required this.items,
-    this.centerGap = true,
+    this.hasCenterGap = true,
   });
 
   final int currentIndex;
   final ValueChanged<int> onTap;
   final List<AppNavItem> items;
-  final bool centerGap;
+  final bool hasCenterGap;
 
   @override
   Widget build(BuildContext context) {
-    if (!centerGap) {
+    if (!hasCenterGap) {
       return AppBottomNav(
         currentIndex: currentIndex,
         onTap: onTap,
@@ -50,7 +50,7 @@ class ProductBottomNav extends StatelessWidget {
         children: [
           for (var index = 0; index < items.length; index++) ...[
             Expanded(
-              child: _TaskifyNavTab(
+              child: _ShellNavTab(
                 item: items[index],
                 isSelected: index == currentIndex,
                 inactiveColor: inactiveColor,
@@ -65,8 +65,8 @@ class ProductBottomNav extends StatelessWidget {
   }
 }
 
-class _TaskifyNavTab extends StatelessWidget {
-  const _TaskifyNavTab({
+class _ShellNavTab extends StatelessWidget {
+  const _ShellNavTab({
     required this.item,
     required this.isSelected,
     required this.inactiveColor,

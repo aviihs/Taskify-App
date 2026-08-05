@@ -201,22 +201,23 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
 
                               if (otp.length < 6) {
                                 AppSnackBar.warning(
-                                    context, "Please enter full 6-digit OTP code");
+                                  context,
+                                  "Please enter full 6-digit OTP code",
+                                );
                                 return;
                               }
 
                               final success = await ref
                                   .read(authProvider.notifier)
                                   .verifyEmail(
-                                    AuthEntity(
-                                      email: widget.email,
-                                      otp: otp,
-                                    ),
+                                    AuthEntity(email: widget.email, otp: otp),
                                   );
 
                               if (success && context.mounted) {
                                 AppSnackBar.success(
-                                    context, "Email verified successfully!");
+                                  context,
+                                  "Email verified successfully!",
+                                );
                                 context.go(AppRoutes.fullDetails);
                               }
                             },
