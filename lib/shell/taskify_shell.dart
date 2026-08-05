@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/widget/navigation/app_bottom_nav.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 import 'package:taskify_app/shell/shell_bottom_nav.dart';
 import 'package:taskify_app/shell/shell_center_fab.dart';
 
-class TaskifyShell extends StatelessWidget {
+class TaskifyShell extends ConsumerWidget {
   const TaskifyShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
+
+    if (auth.user == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) context.go(AppRoutes.login);
+      });
+      return const Scaffold(body: SizedBox.shrink());
+    }
+
     void onTap(int index) {
       HapticFeedback.selectionClick();
       navigationShell.goBranch(

@@ -9,7 +9,7 @@ class AppRoutes {
   static const String adminDashboard = '/admin';
   static const String adminUsers = '/admin/users';
   static const String adminTasks = '/admin/tasks';
-  static const String adminSettings = '/admin/settings';
+  static const String adminProfile = '/admin/profile';
   static const String login = '/login';
   static const String register = '/register';
   static const String otpScreen = '/otp-screen';

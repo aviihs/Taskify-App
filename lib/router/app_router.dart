@@ -4,7 +4,7 @@ import 'package:taskify_app/core/auth/authentication/presentation/screens/full_d
 import 'package:taskify_app/core/auth/authentication/presentation/screens/otp_screen.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/screens/verify_otp_screen.dart';
 import 'package:taskify_app/features/admin/presentation/pages/admin_dashboard_page.dart';
-import 'package:taskify_app/features/admin/presentation/pages/admin_settings_page.dart';
+import 'package:taskify_app/features/admin/presentation/pages/admin_profile_page.dart';
 import 'package:taskify_app/features/admin/presentation/pages/admin_tasks_page.dart';
 import 'package:taskify_app/features/admin/presentation/pages/admin_users_page.dart';
 
@@ -62,8 +62,8 @@ final GoRouter appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.adminSettings,
-              builder: (context, state) => const AdminSettingsPage(),
+              path: AppRoutes.adminProfile,
+              builder: (context, state) => const AdminProfilePage(),
             ),
           ],
         ),
