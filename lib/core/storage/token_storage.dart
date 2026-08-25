@@ -6,6 +6,8 @@ class TokenStorage {
   static const String _accessTokenKey = 'access_token';
   static const String _refreshTokenKey = 'refresh_token';
   static const String _userKey = 'user_data';
+  static const String _biometricEnabledKey = 'biometric_enabled';
+  static const String _lastActiveAtKey = 'last_active_at_millis';
 
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
@@ -61,5 +63,35 @@ class TokenStorage {
     await prefs.remove(_accessTokenKey);
     await prefs.remove(_refreshTokenKey);
     await prefs.remove(_userKey);
+    // Intentionally keep the biometric preference across logout/login so the
+    // user doesn't need to re-enable it every time they sign back in.
+    await prefs.remove(_lastActiveAtKey);
+  }
+
+  /// Whether the user has opted in to unlocking the app with biometrics.
+  /// This is a device-local preference, not sensitive data.
+  Future<bool> isBiometricEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_biometricEnabledKey) ?? false;
+  }
+
+  Future<void> setBiometricEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_biometricEnabledKey, enabled);
+  }
+
+  /// Timestamp of the last moment the app was in the foreground, used to
+  /// decide whether a returning session is stale enough to require a
+  /// biometric re-check.
+  Future<void> setLastActiveAt(DateTime time) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_lastActiveAtKey, time.millisecondsSinceEpoch);
+  }
+
+  Future<DateTime?> getLastActiveAt() async {
+    final prefs = await SharedPreferences.getInstance();
+    final millis = prefs.getInt(_lastActiveAtKey);
+    if (millis == null) return null;
+    return DateTime.fromMillisecondsSinceEpoch(millis);
   }
 }

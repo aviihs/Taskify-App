@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
+import 'package:taskify_app/core/auth/biometric/biometric_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/widget/appbar/app_appbar.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/cards/app_card.dart';
+import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
+import 'package:taskify_app/core/widget/inputs/app_switch.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 
 class ShellProfilePage extends ConsumerWidget {
@@ -30,6 +33,9 @@ class ShellProfilePage extends ConsumerWidget {
     final name = user?.firstName ?? user?.userName ?? 'Taskify User';
     final email = user?.email ?? 'No email';
     final isAdmin = user?.isAdmin ?? false;
+
+    final biometricAvailable = ref.watch(biometricAvailableProvider);
+    final biometricEnabled = ref.watch(biometricEnabledProvider);
 
     return Scaffold(
       appBar: AppAppBar(title: title),
@@ -72,6 +78,46 @@ class ShellProfilePage extends ConsumerWidget {
                   onPressed: () => context.go(AppRoutes.adminDashboard),
                 ),
               ],
+
+              biometricAvailable.when(
+                data: (available) {
+                  if (!available) return const SizedBox.shrink();
+                  return AppSwitch(
+                    margin: const EdgeInsets.only(top: AppSpacing.xl),
+                    value: biometricEnabled,
+                    title: 'Fingerprint Login',
+                    subtitle: biometricEnabled
+                        ? 'Unlock Taskify with your fingerprint or face'
+                        : 'Use your fingerprint to quickly unlock Taskify',
+                    onChanged: (value) async {
+                      final notifier = ref.read(
+                        biometricEnabledProvider.notifier,
+                      );
+                      if (!value) {
+                        await notifier.setEnabled(false);
+                        return;
+                      }
+
+                      final confirmed = await ref
+                          .read(biometricServiceProvider)
+                          .authenticate(
+                            'Confirm your fingerprint to enable biometric login',
+                          );
+
+                      if (confirmed) {
+                        await notifier.setEnabled(true);
+                      } else if (context.mounted) {
+                        AppSnackBar.error(
+                          context,
+                          'Could not verify your fingerprint. Please try again.',
+                        );
+                      }
+                    },
+                  );
+                },
+                loading: () => const SizedBox.shrink(),
+                error: (_, _) => const SizedBox.shrink(),
+              ),
 
               const SizedBox(height: AppSpacing.xl),
               AppButton(
