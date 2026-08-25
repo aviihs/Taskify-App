@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/auth/biometric/app_lock_gate.dart';
 import 'core/design_system/design_system.dart';
 import 'router/app_router.dart';
 
@@ -23,6 +24,8 @@ class TaskifyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           routerConfig: appRouter,
+          builder: (context, child) =>
+              AppLockGate(child: child ?? const SizedBox.shrink()),
         );
       },
     );
