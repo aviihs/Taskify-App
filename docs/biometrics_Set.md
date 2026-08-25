@@ -316,3 +316,6 @@ and the token lifecycle never need to know about each other.
 `TokenStorage.clearAll()` wipes tokens and the last-active timestamp, but
 not the biometric flag. Re-enabling biometrics after every login would
 defeat the point of it being a convenience feature.
+
+
+https://claude.ai/code/artifact/cce80dae-e57d-4054-9993-2e7922a2efa3?via=auto_preview
