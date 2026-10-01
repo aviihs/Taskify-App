@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
@@ -38,23 +39,19 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg =
-        backgroundColor ?? (isDark ? const Color(0xFF1E2235) : Colors.white);
-    final activeColor = selectedItemColor ?? AppColors.primary;
-    final inactiveColor =
-        unselectedItemColor ??
-        (isDark ? const Color(0xFF6B7280) : AppColors.textMuted);
+    final bg = backgroundColor ?? context.colors.surface;
+    final activeColor = selectedItemColor ?? context.colors.primary;
+    final inactiveColor = unselectedItemColor ?? context.colors.textMuted;
 
     return Container(
       height: AppUi.bottomNavHeight,
       decoration: BoxDecoration(
         color: bg,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0x10000000),
+            color: context.colors.shadow,
             blurRadius: 16,
-            offset: Offset(0, -4),
+            offset: const Offset(0, -4),
           ),
         ],
       ),

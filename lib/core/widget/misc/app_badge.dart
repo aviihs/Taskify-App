@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 
@@ -32,28 +33,28 @@ class AppBadge extends StatelessWidget {
 
     switch (variant) {
       case AppBadgeVariant.primary:
-        bg = AppColors.primary.withValues(alpha: 0.15);
-        fg = AppColors.primary;
+        bg = context.colors.primary.withValues(alpha: 0.15);
+        fg = context.colors.primary;
         break;
       case AppBadgeVariant.success:
-        bg = AppColors.successLight;
+        bg = context.colors.successLight;
         fg = AppColors.success;
         break;
       case AppBadgeVariant.warning:
-        bg = AppColors.warningLight;
+        bg = context.colors.warningLight;
         fg = AppColors.warning;
         break;
       case AppBadgeVariant.danger:
-        bg = AppColors.errorLight;
+        bg = context.colors.errorLight;
         fg = AppColors.error;
         break;
       case AppBadgeVariant.info:
-        bg = AppColors.infoLight;
+        bg = context.colors.infoLight;
         fg = AppColors.info;
         break;
       case AppBadgeVariant.neutral:
-        bg = AppColors.surfaceVariant;
-        fg = AppColors.textSecondary;
+        bg = context.colors.surfaceVariant;
+        fg = context.colors.textSecondary;
         break;
     }
 

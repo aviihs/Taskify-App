@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
 
 /// Reusable search bar input field with search icon and clear button.
@@ -83,7 +83,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
                 )
               : null,
           filled: true,
-          fillColor: AppColors.background,
+          fillColor: context.colors.background,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 12,

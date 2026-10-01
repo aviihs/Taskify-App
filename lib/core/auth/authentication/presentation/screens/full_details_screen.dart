@@ -7,8 +7,8 @@ import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.d
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
 import 'package:taskify_app/core/widget/inputs/app_date_picker.dart';
@@ -101,12 +101,12 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
         children: [
           CircleAvatar(
             radius: 55,
-            backgroundColor: AppColors.primary.withValues(alpha: .15),
+            backgroundColor: context.colors.primary.withValues(alpha: .15),
             backgroundImage: _profileImage != null
                 ? FileImage(_profileImage!)
                 : null,
             child: _profileImage == null
-                ? const Icon(Icons.person, size: 55, color: AppColors.primary)
+                ? Icon(Icons.person, size: 55, color: context.colors.primary)
                 : null,
           ),
           Positioned(
@@ -201,12 +201,14 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Complete Profile",
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   "Add your details to continue",
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: .85),
                   ),
                 ),
@@ -214,8 +216,8 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
+                    decoration: BoxDecoration(
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(32),
                       ),
@@ -228,8 +230,8 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                           const SizedBox(height: AppSpacing.md),
                           Text(
                             "Upload Profile Photo",
-                            style: AppTypography.labelMedium.copyWith(
-                              color: themeColor,
+                            style: context.typography.labelMedium.copyWith(
+                              color: context.colors.primary,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.xl),
@@ -287,11 +289,11 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: AppColors.background,
+                              color: context.colors.background,
                               borderRadius: BorderRadius.circular(
                                 AppUi.borderRadius,
                               ),
-                              border: Border.all(color: AppColors.border),
+                              border: Border.all(color: context.colors.border),
                             ),
                             child: Row(
                               children: [
@@ -311,13 +313,13 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                                         (authEmail ?? false)
                                             ? "Email Verified"
                                             : "Email Not Verified",
-                                        style: AppTypography.labelMedium,
+                                        style: context.typography.labelMedium,
                                       ),
                                       Text(
                                         authEmail ?? false
                                             ? "Your email has been verified"
                                             : "Your email has not been verified",
-                                        style: AppTypography.bodyMedium,
+                                        style: context.typography.bodyMedium,
                                       ),
                                     ],
                                   ),
@@ -333,7 +335,7 @@ class _FullDetailsScreenState extends ConsumerState<FullDetailsScreen> {
                               "Others can see your availability",
                             ),
                             value: _isOnline,
-                            activeThumbColor: themeColor,
+                            activeThumbColor: context.colors.primary,
                             onChanged: (value) {
                               setState(() {
                                 _isOnline = value;

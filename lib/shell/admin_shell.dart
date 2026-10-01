@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/navigation/app_bottom_nav.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 import 'package:taskify_app/shell/shell_bottom_nav.dart';
@@ -42,7 +42,7 @@ class AdminShell extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: context.colors.scaffoldBackground,
       extendBody: true,
       resizeToAvoidBottomInset: false,
       body: navigationShell,

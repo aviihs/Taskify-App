@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 
 /// Reusable primary button supporting icons, loading state, custom colors & gradients.
@@ -61,7 +61,7 @@ class AppButton extends StatelessWidget {
         ],
         Text(
           text,
-          style: AppTypography.buttonText.copyWith(
+          style: context.typography.buttonText.copyWith(
             color: textColor ?? Colors.white,
           ),
         ),
@@ -98,7 +98,7 @@ class AppButton extends StatelessWidget {
         onPressed: isClickable ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? AppColors.primary,
-          disabledBackgroundColor: AppColors.disabled,
+          disabledBackgroundColor: context.colors.disabled,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(effectiveRadius),

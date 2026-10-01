@@ -5,8 +5,8 @@ import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.d
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/utils/validators.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
@@ -95,13 +95,15 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Forgot Password",
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   "Enter your email to receive an OTP",
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: .85),
                   ),
                 ),
@@ -109,8 +111,8 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
+                    decoration: BoxDecoration(
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(32),
                       ),
@@ -132,8 +134,8 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                             const SizedBox(height: AppSpacing.sm),
                             Text(
                               "We'll send a 6-digit verification code to your email.",
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppColors.textMuted,
+                              style: context.typography.bodyMedium.copyWith(
+                                color: context.colors.textMuted,
                               ),
                             ),
                             const SizedBox(height: AppSpacing.xxl),
@@ -171,9 +173,8 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                                 onTap: () => context.pop(),
                                 child: Text(
                                   "Back to Login",
-                                  style: AppTypography.labelMedium.copyWith(
-                                    color: themeColor,
-                                  ),
+                                  style: context.typography.labelMedium
+                                      .copyWith(color: context.colors.primary),
                                 ),
                               ),
                             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
 import '../../constants/app_ui.dart';
 
@@ -36,12 +36,8 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? AppUi.cardRadius;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final bg =
-        backgroundColor ?? (isDark ? const Color(0xFF1E2235) : AppColors.card);
-    final border =
-        borderColor ?? (isDark ? const Color(0xFF2A2E45) : AppColors.divider);
+    final bg = backgroundColor ?? context.colors.card;
+    final border = borderColor ?? context.colors.divider;
 
     Widget container = Container(
       width: width,

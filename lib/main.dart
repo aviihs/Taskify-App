@@ -5,29 +5,37 @@ import 'core/auth/biometric/app_lock_gate.dart';
 import 'core/design_system/design_system.dart';
 import 'router/app_router.dart';
 
-void main() {
-  runApp(const ProviderScope(child: TaskifyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final initialThemeMode = await ThemeModeNotifier.loadSaved();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        themeModeProvider.overrideWith(
+          (ref) => ThemeModeNotifier(initialThemeMode),
+        ),
+      ],
+      child: const TaskifyApp(),
+    ),
+  );
 }
 
-class TaskifyApp extends StatelessWidget {
+class TaskifyApp extends ConsumerWidget {
   const TaskifyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeModeNotifier,
-      builder: (context, mode, child) {
-        return MaterialApp.router(
-          title: 'Taskify',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: mode,
-          routerConfig: appRouter,
-          builder: (context, child) =>
-              AppLockGate(child: child ?? const SizedBox.shrink()),
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
+      title: 'Taskify',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ref.watch(themeModeProvider),
+      themeAnimationDuration: AppUi.normalAnimation,
+      routerConfig: appRouter,
+      builder: (context, child) =>
+          AppLockGate(child: child ?? const SizedBox.shrink()),
     );
   }
 }

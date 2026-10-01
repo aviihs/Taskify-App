@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
 import 'package:taskify_app/core/constants/radius.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/appbar/app_appbar.dart';
 import 'package:taskify_app/core/widget/cards/app_card.dart';
 
@@ -31,13 +31,13 @@ class ShellPlaceholderPage extends StatelessWidget {
               horizontal: AppSpacing.md,
             ),
             decoration: BoxDecoration(
-              color: AppColors.surfaceVariant.withValues(alpha: 0.45),
+              color: context.colors.surfaceVariant.withValues(alpha: 0.45),
               borderRadius: AppRadius.controlBr,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, size: 56, color: AppColors.primary),
+                Icon(icon, size: 56, color: context.colors.primary),
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   title,

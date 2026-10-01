@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 import '../misc/dash_border.dart';
 
@@ -64,7 +63,7 @@ class AppImagePicker extends StatelessWidget {
             )
           : CustomDashBorder(
               borderRadius: AppUi.borderRadius,
-              color: AppColors.border,
+              color: context.colors.border,
               child: InkWell(
                 onTap: onTap,
                 borderRadius: BorderRadius.circular(AppUi.borderRadius),
@@ -78,28 +77,28 @@ class AppImagePicker extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(AppSpacing.sm),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.1),
+                          color: context.colors.primary.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.cloud_upload_outlined,
-                          color: AppColors.primary,
+                          color: context.colors.primary,
                           size: AppUi.iconMD,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
                         label,
-                        style: AppTypography.buttonText.copyWith(
-                          color: AppColors.primary,
+                        style: context.typography.buttonText.copyWith(
+                          color: context.colors.primary,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         'PNG, JPG up to 10MB',
-                        style: AppTypography.bodyMedium.copyWith(
+                        style: context.typography.bodyMedium.copyWith(
                           fontSize: 11,
-                          color: AppColors.textMuted,
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ],

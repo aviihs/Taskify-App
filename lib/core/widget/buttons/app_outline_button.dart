@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 
 /// Reusable outlined button with icon support, loading state, and custom border colors.
@@ -35,7 +34,7 @@ class AppOutlineButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? AppUi.borderRadius;
-    final effectiveColor = textColor ?? AppColors.textPrimary;
+    final effectiveColor = textColor ?? context.colors.textPrimary;
     final isClickable = !isLoading && !isDisabled && onPressed != null;
 
     return SizedBox(
@@ -47,8 +46,8 @@ class AppOutlineButton extends StatelessWidget {
           foregroundColor: effectiveColor,
           side: BorderSide(
             color: isDisabled
-                ? AppColors.disabled
-                : (borderColor ?? AppColors.surfaceVariant),
+                ? context.colors.disabled
+                : (borderColor ?? context.colors.surfaceVariant),
             width: 1.2,
           ),
           shape: RoundedRectangleBorder(
@@ -75,7 +74,9 @@ class AppOutlineButton extends StatelessWidget {
             ],
             Text(
               text,
-              style: AppTypography.buttonText.copyWith(color: effectiveColor),
+              style: context.typography.buttonText.copyWith(
+                color: effectiveColor,
+              ),
             ),
           ],
         ),

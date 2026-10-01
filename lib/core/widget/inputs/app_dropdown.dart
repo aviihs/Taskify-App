@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 
 /// Reusable dropdown input field widget.
@@ -40,8 +39,8 @@ class AppDropdown<T> extends StatelessWidget {
           if (label != null) ...[
             Text(
               label!,
-              style: AppTypography.labelMedium.copyWith(
-                color: AppColors.textPrimary,
+              style: context.typography.labelMedium.copyWith(
+                color: context.colors.textPrimary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -55,7 +54,7 @@ class AppDropdown<T> extends StatelessWidget {
                   : item.toString();
               return DropdownMenuItem<T>(
                 value: item,
-                child: Text(displayText, style: AppTypography.bodyLarge),
+                child: Text(displayText, style: context.typography.bodyLarge),
               );
             }).toList(),
             onChanged: onChanged,
@@ -64,14 +63,14 @@ class AppDropdown<T> extends StatelessWidget {
               errorText: errorText,
               prefixIcon: prefixIcon,
               filled: true,
-              fillColor: AppColors.background,
+              fillColor: context.colors.background,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 14,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                borderSide: const BorderSide(color: AppColors.border),
+                borderSide: BorderSide(color: context.colors.border),
               ),
             ),
             icon: const Icon(Icons.keyboard_arrow_down_rounded),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable form input textfield with label, helper, error, and icon support.
 class AppTextField extends StatelessWidget {
@@ -63,8 +61,8 @@ class AppTextField extends StatelessWidget {
           if (label != null) ...[
             Text(
               label!,
-              style: AppTypography.labelMedium.copyWith(
-                color: AppColors.textPrimary,
+              style: context.typography.labelMedium.copyWith(
+                color: context.colors.textPrimary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -85,7 +83,7 @@ class AppTextField extends StatelessWidget {
             minLines: minLines,
             focusNode: focusNode,
             autofocus: autofocus,
-            style: AppTypography.bodyLarge,
+            style: context.typography.bodyLarge,
             decoration: InputDecoration(
               hintText: hintText,
               helperText: helperText,

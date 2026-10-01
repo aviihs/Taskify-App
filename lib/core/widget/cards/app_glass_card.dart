@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_spacing.dart';
 import '../../constants/app_ui.dart';
@@ -34,12 +35,8 @@ class AppGlassCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? AppUi.cardRadius;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final border =
-        borderColor ??
-        (isDark ? const Color(0x33FFFFFF) : const Color(0x66FFFFFF));
-    final overlayColor = isDark ? Colors.black : Colors.white;
+    final border = borderColor ?? context.brand.glassBorderColor;
+    final overlayColor = context.isDarkMode ? Colors.black : Colors.white;
 
     return Container(
       width: width,

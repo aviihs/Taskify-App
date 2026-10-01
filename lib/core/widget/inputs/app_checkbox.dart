@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable checkbox input tile with title, subtitle, and custom styling.
 class AppCheckbox extends StatelessWidget {
@@ -29,15 +27,17 @@ class AppCheckbox extends StatelessWidget {
       child: CheckboxListTile(
         value: value,
         onChanged: onChanged,
-        activeColor: activeColor ?? AppColors.primary,
+        activeColor: activeColor ?? context.colors.primary,
         contentPadding: EdgeInsets.zero,
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           title,
-          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w500),
+          style: context.typography.bodyLarge.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         subtitle: subtitle != null
-            ? Text(subtitle!, style: AppTypography.bodyMedium)
+            ? Text(subtitle!, style: context.typography.bodyMedium)
             : null,
       ),
     );

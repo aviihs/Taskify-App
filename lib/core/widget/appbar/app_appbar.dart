@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 
 /// Reusable App Header implementing [PreferredSizeWidget].
@@ -43,13 +42,14 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       leading: leading,
       automaticallyImplyLeading: automaticallyImplyLeading,
-      backgroundColor: backgroundColor ?? AppColors.primary,
-      foregroundColor: foregroundColor ?? Colors.white,
+      // Unset colours fall back to the light/dark AppBarTheme.
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
       centerTitle: centerTitle,
       elevation: elevation,
-      titleTextStyle: AppTypography.heading2.copyWith(
-        color: foregroundColor ?? Colors.white,
-      ),
+      titleTextStyle: foregroundColor == null
+          ? null
+          : context.typography.heading2.copyWith(color: foregroundColor),
       bottom: bottom,
     );
   }

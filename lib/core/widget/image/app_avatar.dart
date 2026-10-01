@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
@@ -74,7 +75,9 @@ class AppAvatar extends StatelessWidget {
               width: size * 0.28,
               height: size * 0.28,
               decoration: BoxDecoration(
-                color: isOnline! ? AppColors.success : AppColors.disabledText,
+                color: isOnline!
+                    ? AppColors.success
+                    : context.colors.disabledText,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 import '../image/app_avatar.dart';
 
@@ -63,13 +63,15 @@ class AppDrawer extends StatelessWidget {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   userName,
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 if (userEmail != null) ...[
                   const SizedBox(height: 2),
                   Text(
                     userEmail!,
-                    style: AppTypography.bodyMedium.copyWith(
+                    style: context.typography.bodyMedium.copyWith(
                       color: Colors.white70,
                       fontSize: 13,
                     ),
@@ -89,15 +91,15 @@ class AppDrawer extends StatelessWidget {
                   leading: Icon(
                     item.icon,
                     color: item.isSelected
-                        ? AppColors.primary
-                        : AppColors.textSecondary,
+                        ? context.colors.primary
+                        : context.colors.textSecondary,
                   ),
                   title: Text(
                     item.title,
-                    style: AppTypography.bodyLarge.copyWith(
+                    style: context.typography.bodyLarge.copyWith(
                       color: item.isSelected
-                          ? AppColors.primary
-                          : AppColors.textPrimary,
+                          ? context.colors.primary
+                          : context.colors.textPrimary,
                       fontWeight: item.isSelected
                           ? FontWeight.bold
                           : FontWeight.normal,
@@ -110,13 +112,15 @@ class AppDrawer extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.15),
+                            color: context.colors.primary.withValues(
+                              alpha: 0.15,
+                            ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
                             item.badgeText!,
-                            style: const TextStyle(
-                              color: AppColors.primary,
+                            style: TextStyle(
+                              color: context.colors.primary,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),

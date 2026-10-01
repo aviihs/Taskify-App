@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/auth/biometric/biometric_provider.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/appbar/app_appbar.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/cards/app_card.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
 import 'package:taskify_app/core/widget/inputs/app_switch.dart';
+import 'package:taskify_app/core/widget/inputs/app_theme_mode_selector.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 
 class ShellProfilePage extends ConsumerWidget {
@@ -39,7 +40,7 @@ class ShellProfilePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppAppBar(title: title),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: AppSpacing.screenPadding,
         child: AppCard(
           child: Column(
@@ -48,8 +49,8 @@ class ShellProfilePage extends ConsumerWidget {
             children: [
               CircleAvatar(
                 radius: 36,
-                backgroundColor: AppColors.primary.withValues(alpha: 0.12),
-                child: Icon(icon, size: 38, color: AppColors.primary),
+                backgroundColor: context.colors.primary.withValues(alpha: 0.12),
+                child: Icon(icon, size: 38, color: context.colors.primary),
               ),
               const SizedBox(height: AppSpacing.md),
               Text(
@@ -78,6 +79,12 @@ class ShellProfilePage extends ConsumerWidget {
                   onPressed: () => context.go(AppRoutes.adminDashboard),
                 ),
               ],
+
+              const SizedBox(height: AppSpacing.xl),
+              Divider(height: 1, color: context.colors.divider),
+              const AppThemeModeSelector(
+                margin: EdgeInsets.only(top: AppSpacing.lg),
+              ),
 
               biometricAvailable.when(
                 data: (available) {

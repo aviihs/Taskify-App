@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable pull-to-refresh wrapper widget for scrollable views.
 class AppRefresh extends StatelessWidget {
@@ -19,7 +18,7 @@ class AppRefresh extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: onRefresh,
-      color: color ?? AppColors.primary,
+      color: color ?? context.colors.primary,
       backgroundColor: Theme.of(context).cardColor,
       child: child,
     );

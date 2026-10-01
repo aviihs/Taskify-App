@@ -13,4 +13,3 @@ class AdminDashboardPage extends StatelessWidget {
     );
   }
 }
-

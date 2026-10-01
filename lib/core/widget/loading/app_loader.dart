@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable circular activity loader and full-screen loading overlay.
 class AppLoader extends StatelessWidget {
@@ -45,7 +44,9 @@ class AppLoader extends StatelessWidget {
         height: size,
         child: CircularProgressIndicator(
           strokeWidth: strokeWidth,
-          valueColor: AlwaysStoppedAnimation<Color>(color ?? AppColors.primary),
+          valueColor: AlwaysStoppedAnimation<Color>(
+            color ?? context.colors.primary,
+          ),
         ),
       ),
     );

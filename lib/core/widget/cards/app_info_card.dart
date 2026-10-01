@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 
 enum AppInfoCardType { info, success, warning, error }
@@ -39,25 +39,25 @@ class AppInfoCard extends StatelessWidget {
 
     switch (type) {
       case AppInfoCardType.info:
-        bg = AppColors.infoLight;
+        bg = context.colors.infoLight;
         border = AppColors.info;
         iconColor = AppColors.info;
         defaultIcon = Icons.info_outline_rounded;
         break;
       case AppInfoCardType.success:
-        bg = AppColors.successLight;
+        bg = context.colors.successLight;
         border = AppColors.success;
         iconColor = AppColors.success;
         defaultIcon = Icons.check_circle_outline_rounded;
         break;
       case AppInfoCardType.warning:
-        bg = AppColors.warningLight;
+        bg = context.colors.warningLight;
         border = AppColors.warning;
         iconColor = AppColors.warning;
         defaultIcon = Icons.warning_amber_rounded;
         break;
       case AppInfoCardType.error:
-        bg = AppColors.errorLight;
+        bg = context.colors.errorLight;
         border = AppColors.error;
         iconColor = AppColors.error;
         defaultIcon = Icons.error_outline_rounded;
@@ -84,18 +84,18 @@ class AppInfoCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.heading2.copyWith(
+                  style: context.typography.heading2.copyWith(
                     fontSize: 14,
-                    color: AppColors.textPrimary,
+                    color: context.colors.textPrimary,
                   ),
                 ),
                 if (message != null) ...[
                   const SizedBox(height: 4),
                   Text(
                     message!,
-                    style: AppTypography.bodyMedium.copyWith(
+                    style: context.typography.bodyMedium.copyWith(
                       fontSize: 13,
-                      color: AppColors.textSecondary,
+                      color: context.colors.textSecondary,
                     ),
                   ),
                 ],
@@ -105,7 +105,7 @@ class AppInfoCard extends StatelessWidget {
                     onTap: onActionPressed,
                     child: Text(
                       actionText!,
-                      style: AppTypography.labelMedium.copyWith(
+                      style: context.typography.labelMedium.copyWith(
                         color: iconColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -119,10 +119,10 @@ class AppInfoCard extends StatelessWidget {
             const SizedBox(width: AppSpacing.xs),
             GestureDetector(
               onTap: onClose,
-              child: const Icon(
+              child: Icon(
                 Icons.close_rounded,
                 size: 18,
-                color: AppColors.textMuted,
+                color: context.colors.textMuted,
               ),
             ),
           ],

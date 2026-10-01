@@ -7,8 +7,8 @@ import 'package:taskify_app/core/auth/authentication/presentation/providers/auth
 import 'package:taskify_app/core/auth/authentication/presentation/widget/otp_input_widget.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
@@ -144,7 +144,9 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Verify Your Account",
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -152,7 +154,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                       ? "Enter the 6-digit code sent to ${widget.email}"
                       : "Enter the 6-digit code sent to your email",
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: .85),
                   ),
                 ),
@@ -160,9 +162,9 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: BorderRadius.vertical(
+                    decoration: BoxDecoration(
+                      color: context.colors.surface,
+                      borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(32),
                       ),
                     ),
@@ -173,7 +175,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                           const SizedBox(height: 8),
                           Text(
                             "Enter verification code",
-                            style: AppTypography.labelMedium,
+                            style: context.typography.labelMedium,
                           ),
                           const SizedBox(height: AppSpacing.lg),
                           OtpInput(
@@ -183,8 +185,8 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                           const SizedBox(height: AppSpacing.md),
                           Text(
                             "Code expires in $timerText",
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: themeColor,
+                            style: context.typography.bodyMedium.copyWith(
+                              color: context.colors.primary,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.xl),
@@ -226,9 +228,9 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 "Didn't receive code? ",
-                                style: AppTypography.bodyMedium,
+                                style: context.typography.bodyMedium,
                               ),
                               GestureDetector(
                                 onTap: _canResend
@@ -245,11 +247,12 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                                     : null,
                                 child: Text(
                                   "Resend OTP",
-                                  style: AppTypography.labelMedium.copyWith(
-                                    color: _canResend
-                                        ? themeColor
-                                        : AppColors.disabled,
-                                  ),
+                                  style: context.typography.labelMedium
+                                      .copyWith(
+                                        color: _canResend
+                                            ? context.colors.primary
+                                            : context.colors.disabled,
+                                      ),
                                 ),
                               ),
                             ],

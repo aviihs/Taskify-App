@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
 
 /// Container with customizable dashed border for file upload boxes and drop zones.
@@ -9,7 +9,7 @@ class CustomDashBorder extends StatelessWidget {
   const CustomDashBorder({
     super.key,
     required this.child,
-    this.color = AppColors.border,
+    this.color,
     this.strokeWidth = 1.5,
     this.dashWidth = 6.0,
     this.dashSpace = 4.0,
@@ -17,7 +17,9 @@ class CustomDashBorder extends StatelessWidget {
   });
 
   final Widget child;
-  final Color color;
+
+  /// Defaults to the theme's border colour.
+  final Color? color;
   final double strokeWidth;
   final double dashWidth;
   final double dashSpace;
@@ -27,7 +29,7 @@ class CustomDashBorder extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _DashBorderPainter(
-        color: color,
+        color: color ?? context.colors.border,
         strokeWidth: strokeWidth,
         dashWidth: dashWidth,
         dashSpace: dashSpace,

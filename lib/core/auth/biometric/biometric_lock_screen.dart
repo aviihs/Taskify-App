@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/router/routes/app_routes.dart';
 
@@ -62,7 +62,7 @@ class _BiometricLockScreenState extends ConsumerState<BiometricLockScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface,
+      color: context.colors.surface,
       child: SafeArea(
         child: Padding(
           padding: AppSpacing.screenPadding,
@@ -71,21 +71,21 @@ class _BiometricLockScreenState extends ConsumerState<BiometricLockScreen> {
             children: [
               CircleAvatar(
                 radius: 44,
-                backgroundColor: AppColors.primary.withValues(alpha: 0.12),
+                backgroundColor: context.colors.primary.withValues(alpha: 0.12),
                 child: Icon(
                   Icons.fingerprint_rounded,
                   size: 48,
-                  color: AppColors.primary,
+                  color: context.colors.primary,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Text('Taskify is locked', style: AppTypography.heading2),
+              Text('Taskify is locked', style: context.typography.heading2),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 'Verify it\'s you to continue where you left off.',
                 textAlign: TextAlign.center,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textMuted,
+                style: context.typography.bodyMedium.copyWith(
+                  color: context.colors.textMuted,
                 ),
               ),
               if (_error != null) ...[
@@ -93,7 +93,7 @@ class _BiometricLockScreenState extends ConsumerState<BiometricLockScreen> {
                 Text(
                   _error!,
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: AppColors.error,
                   ),
                 ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 import '../../constants/app_ui.dart';
 import '../buttons/app_button.dart';
 import '../buttons/app_outline_button.dart';
@@ -61,7 +61,7 @@ class AppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveIconColor =
-        iconColor ?? (isDanger ? AppColors.error : AppColors.primary);
+        iconColor ?? (isDanger ? AppColors.error : context.colors.primary);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -86,13 +86,13 @@ class AppDialog extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: AppTypography.heading2,
+              style: context.typography.heading2,
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTypography.bodyMedium,
+              style: context.typography.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.xl),
             Row(

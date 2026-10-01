@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
 
 /// Reusable Sliver AppBar for collapsible headers and scroll views.
 class AppSliverAppBar extends StatelessWidget {
@@ -37,7 +37,7 @@ class AppSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         title: Text(
           title,
-          style: AppTypography.heading2.copyWith(
+          style: context.typography.heading2.copyWith(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -46,7 +46,7 @@ class AppSliverAppBar extends StatelessWidget {
         background:
             flexibleSpaceBackground ??
             Container(
-              decoration: const BoxDecoration(gradient: AppGradients.hero),
+              decoration: BoxDecoration(gradient: context.brand.heroGradient),
             ),
       ),
     );

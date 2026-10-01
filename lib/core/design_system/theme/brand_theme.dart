@@ -27,7 +27,7 @@ class BrandTheme extends ThemeExtension<BrandTheme> {
     heroGradient: AppGradients.hero,
     cardGradient: AppGradients.card,
     glassGradient: AppGradients.glass,
-    glassBorderColor: const Color(0x33FFFFFF),
+    glassBorderColor: const Color(0x66FFFFFF),
     shimmerBaseColor: const Color(0xFFE8EAF4),
     shimmerHighlightColor: const Color(0xFFF8F9FD),
   );

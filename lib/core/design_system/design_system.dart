@@ -8,5 +8,6 @@ export '../constants/radius.dart';
 
 // Theme
 export '../theme/app_theme.dart';
+export 'theme/app_palette.dart';
 export 'theme/brand_theme.dart';
 export 'theme/theme_mode_provider.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
@@ -39,7 +40,8 @@ class AppIconButton extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color:
-            backgroundColor ?? AppColors.surfaceVariant.withValues(alpha: 0.5),
+            backgroundColor ??
+            context.colors.surfaceVariant.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(effectiveRadius),
         border: borderColor != null
             ? Border.all(color: borderColor!, width: 1.2)
@@ -54,7 +56,7 @@ class AppIconButton extends StatelessWidget {
             child: Icon(
               icon,
               size: iconSize,
-              color: color ?? AppColors.textPrimary,
+              color: color ?? context.colors.textPrimary,
             ),
           ),
         ),

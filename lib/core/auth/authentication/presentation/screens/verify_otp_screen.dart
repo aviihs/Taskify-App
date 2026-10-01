@@ -7,8 +7,8 @@ import 'package:taskify_app/core/auth/authentication/presentation/providers/auth
 import 'package:taskify_app/core/auth/authentication/presentation/widget/otp_input_widget.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/utils/validators.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
@@ -151,13 +151,15 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Verify OTP",
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   "Enter the OTP and create a new password",
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: .85),
                   ),
                 ),
@@ -165,8 +167,8 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
+                    decoration: BoxDecoration(
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(32),
                       ),
@@ -179,7 +181,7 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "OTP Code",
-                              style: AppTypography.labelMedium,
+                              style: context.typography.labelMedium,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.md),
@@ -190,8 +192,8 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                           const SizedBox(height: AppSpacing.md),
                           Text(
                             "Code expires in $timerText",
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: themeColor,
+                            style: context.typography.bodyMedium.copyWith(
+                              color: context.colors.primary,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.sm),
@@ -212,10 +214,10 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                                   : null,
                               child: Text(
                                 "Resend OTP",
-                                style: AppTypography.labelMedium.copyWith(
+                                style: context.typography.labelMedium.copyWith(
                                   color: _canResend
-                                      ? themeColor
-                                      : AppColors.disabled,
+                                      ? context.colors.primary
+                                      : context.colors.disabled,
                                 ),
                               ),
                             ),
@@ -289,8 +291,8 @@ class _VerifyOtpScreenState extends ConsumerState<VerifyOtpScreen> {
                             onTap: () => context.pop(),
                             child: Text(
                               "Change Email",
-                              style: AppTypography.labelMedium.copyWith(
-                                color: themeColor,
+                              style: context.typography.labelMedium.copyWith(
+                                color: context.colors.primary,
                               ),
                             ),
                           ),

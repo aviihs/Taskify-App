@@ -88,10 +88,7 @@ class _AppLockGateState extends ConsumerState<AppLockGate>
     final isLocked = ref.watch(appLockProvider);
 
     return Stack(
-      children: [
-        widget.child,
-        if (isLocked) const BiometricLockScreen(),
-      ],
+      children: [widget.child, if (isLocked) const BiometricLockScreen()],
     );
   }
 }

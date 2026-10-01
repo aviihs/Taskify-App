@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_colors.dart';
 
@@ -50,17 +51,17 @@ class CrudButton extends StatelessWidget {
       case CrudActionType.view:
         icon = Icons.visibility_outlined;
         color = AppColors.info;
-        bg = AppColors.infoLight;
+        bg = context.colors.infoLight;
         break;
       case CrudActionType.edit:
         icon = Icons.edit_outlined;
-        color = AppColors.primary;
-        bg = AppColors.surfaceVariant;
+        color = context.colors.primary;
+        bg = context.colors.surfaceVariant;
         break;
       case CrudActionType.delete:
         icon = Icons.delete_outline_rounded;
         color = AppColors.error;
-        bg = AppColors.errorLight;
+        bg = context.colors.errorLight;
         break;
     }
 

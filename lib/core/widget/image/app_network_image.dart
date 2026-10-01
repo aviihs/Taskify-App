@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_ui.dart';
 import '../loading/app_shimmer.dart';
 
@@ -28,7 +28,7 @@ class AppNetworkImage extends StatelessWidget {
     final effectiveRadius = borderRadius ?? AppUi.borderRadius;
 
     if (imageUrl == null || imageUrl!.isEmpty) {
-      return _buildPlaceholder(effectiveRadius);
+      return _buildPlaceholder(context, effectiveRadius);
     }
 
     return ClipRRect(
@@ -47,24 +47,24 @@ class AppNetworkImage extends StatelessWidget {
           );
         },
         errorBuilder: (context, error, stackTrace) {
-          return _buildPlaceholder(effectiveRadius);
+          return _buildPlaceholder(context, effectiveRadius);
         },
       ),
     );
   }
 
-  Widget _buildPlaceholder(double radius) {
+  Widget _buildPlaceholder(BuildContext context, double radius) {
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: context.colors.surfaceVariant,
         borderRadius: BorderRadius.circular(radius),
       ),
       child: Center(
         child: Icon(
           fallbackIcon,
-          color: AppColors.textMuted,
+          color: context.colors.textMuted,
           size: AppUi.iconMD,
         ),
       ),

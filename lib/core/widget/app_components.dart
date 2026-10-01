@@ -17,6 +17,7 @@ export 'inputs/app_search_field.dart';
 export 'inputs/app_dropdown.dart';
 export 'inputs/app_checkbox.dart';
 export 'inputs/app_switch.dart';
+export 'inputs/app_theme_mode_selector.dart';
 export 'inputs/app_radio.dart';
 export 'inputs/app_date_picker.dart';
 export 'inputs/app_time_picker.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../constants/app_ui.dart';
 
@@ -48,13 +49,9 @@ class _AppShimmerState extends State<AppShimmer>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final base =
-        widget.baseColor ??
-        (isDark ? const Color(0xFF2B2F44) : const Color(0xFFE8EAF4));
+    final base = widget.baseColor ?? context.brand.shimmerBaseColor;
     final highlight =
-        widget.highlightColor ??
-        (isDark ? const Color(0xFF383D58) : const Color(0xFFF8F9FD));
+        widget.highlightColor ?? context.brand.shimmerHighlightColor;
 
     return AnimatedBuilder(
       animation: _animation,

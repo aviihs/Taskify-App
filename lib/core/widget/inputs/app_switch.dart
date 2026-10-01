@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable modern toggle switch tile widget.
 class AppSwitch extends StatelessWidget {
@@ -29,18 +27,20 @@ class AppSwitch extends StatelessWidget {
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,
-        activeTrackColor: (activeColor ?? AppColors.primary).withValues(
+        activeTrackColor: (activeColor ?? context.colors.primary).withValues(
           alpha: 0.5,
         ),
         // ignore: deprecated_member_use
-        activeColor: activeColor ?? AppColors.primary,
+        activeColor: activeColor ?? context.colors.primary,
         contentPadding: EdgeInsets.zero,
         title: Text(
           title,
-          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w500),
+          style: context.typography.bodyLarge.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         subtitle: subtitle != null
-            ? Text(subtitle!, style: AppTypography.bodyMedium)
+            ? Text(subtitle!, style: context.typography.bodyMedium)
             : null,
       ),
     );

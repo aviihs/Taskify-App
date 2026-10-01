@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 class OtpInput extends StatelessWidget {
   const OtpInput({
@@ -41,17 +41,14 @@ class OtpInput extends StatelessWidget {
               isCollapsed: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 18),
               filled: true,
-              fillColor: AppColors.background,
+              fillColor: context.colors.background,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                borderSide: const BorderSide(color: AppColors.border),
+                borderSide: BorderSide(color: context.colors.border),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppUi.borderRadius),
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                  width: 2,
-                ),
+                borderSide: BorderSide(color: context.colors.primary, width: 2),
               ),
             ),
             onChanged: (value) {

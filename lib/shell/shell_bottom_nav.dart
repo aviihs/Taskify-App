@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/widget/navigation/app_bottom_nav.dart';
 
 class ShellBottomNav extends StatelessWidget {
@@ -27,18 +27,15 @@ class ShellBottomNav extends StatelessWidget {
       );
     }
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF1E2235) : Colors.white;
-    final inactiveColor = isDark
-        ? const Color(0xFF6B7280)
-        : AppColors.textMuted;
+    final backgroundColor = context.colors.surface;
+    final inactiveColor = context.colors.textMuted;
     final center = items.length ~/ 2;
 
     return BottomAppBar(
       height: AppUi.bottomNavHeight,
       color: backgroundColor,
       elevation: 14,
-      shadowColor: Colors.black.withValues(alpha: 0.16),
+      shadowColor: context.colors.shadow,
       surfaceTintColor: Colors.transparent,
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
@@ -80,21 +77,21 @@ class _ShellNavTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? AppColors.primary : inactiveColor;
+    final color = isSelected ? context.colors.primary : inactiveColor;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 7),
       child: Material(
         color: isSelected
-            ? AppColors.primary.withValues(alpha: 0.08)
+            ? context.colors.primary.withValues(alpha: 0.08)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(14),
-          hoverColor: AppColors.primary.withValues(alpha: 0.06),
-          splashColor: AppColors.primary.withValues(alpha: 0.12),
-          highlightColor: AppColors.primary.withValues(alpha: 0.08),
+          hoverColor: context.colors.primary.withValues(alpha: 0.06),
+          splashColor: context.colors.primary.withValues(alpha: 0.12),
+          highlightColor: context.colors.primary.withValues(alpha: 0.08),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

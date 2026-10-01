@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_colors.dart';
-import '../../constants/app_typography.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 /// Reusable radio tile group selection option.
 class AppRadio<T> extends StatelessWidget {
@@ -35,14 +33,16 @@ class AppRadio<T> extends StatelessWidget {
         groupValue: groupValue,
         // ignore: deprecated_member_use
         onChanged: onChanged,
-        activeColor: activeColor ?? AppColors.primary,
+        activeColor: activeColor ?? context.colors.primary,
         contentPadding: EdgeInsets.zero,
         title: Text(
           title,
-          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w500),
+          style: context.typography.bodyLarge.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         subtitle: subtitle != null
-            ? Text(subtitle!, style: AppTypography.bodyMedium)
+            ? Text(subtitle!, style: context.typography.bodyMedium)
             : null,
       ),
     );

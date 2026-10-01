@@ -5,8 +5,8 @@ import 'package:taskify_app/core/auth/authentication/domain/entity/auth_entity.d
 import 'package:taskify_app/core/auth/authentication/presentation/providers/auth_provider.dart';
 import 'package:taskify_app/core/constants/app_colors.dart';
 import 'package:taskify_app/core/constants/app_spacing.dart';
-import 'package:taskify_app/core/constants/app_typography.dart';
 import 'package:taskify_app/core/constants/app_ui.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 import 'package:taskify_app/core/utils/validators.dart';
 import 'package:taskify_app/core/widget/buttons/app_button.dart';
 import 'package:taskify_app/core/widget/dialog/app_snackbar.dart';
@@ -105,12 +105,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   "Create Account",
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                  style: context.typography.heading2.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   "Create your account to continue",
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: context.typography.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.85),
                   ),
                 ),
@@ -118,8 +120,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
+                    decoration: BoxDecoration(
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(32),
                       ),
@@ -233,8 +235,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             const SizedBox(height: AppSpacing.xl),
                             Row(
                               children: [
-                                const Expanded(
-                                  child: Divider(color: AppColors.border),
+                                Expanded(
+                                  child: Divider(color: context.colors.border),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -242,13 +244,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   ),
                                   child: Text(
                                     "Or",
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: AppColors.textMuted,
-                                    ),
+                                    style: context.typography.bodyMedium
+                                        .copyWith(
+                                          color: context.colors.textMuted,
+                                        ),
                                   ),
                                 ),
-                                const Expanded(
-                                  child: Divider(color: AppColors.border),
+                                Expanded(
+                                  child: Divider(color: context.colors.border),
                                 ),
                               ],
                             ),
@@ -256,9 +259,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
+                                Text(
                                   "Already have an account? ",
-                                  style: AppTypography.bodyMedium,
+                                  style: context.typography.bodyMedium,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -266,9 +269,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   },
                                   child: Text(
                                     "Login",
-                                    style: AppTypography.labelMedium.copyWith(
-                                      color: themeColor,
-                                    ),
+                                    style: context.typography.labelMedium
+                                        .copyWith(
+                                          color: context.colors.primary,
+                                        ),
                                   ),
                                 ),
                               ],

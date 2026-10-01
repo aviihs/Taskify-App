@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 
 /// Reusable modal bottom sheet container with handle bar and title.
 class AppBottomSheet extends StatelessWidget {
@@ -58,7 +57,7 @@ class AppBottomSheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: AppColors.disabled,
+                    color: context.colors.disabled,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -70,7 +69,7 @@ class AppBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(title!, style: AppTypography.heading2),
+                    Text(title!, style: context.typography.heading2),
                     IconButton(
                       icon: const Icon(Icons.close_rounded, size: 20),
                       onPressed: () => Navigator.of(context).pop(),

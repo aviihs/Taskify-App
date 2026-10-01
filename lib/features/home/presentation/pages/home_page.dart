@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
 import '../../../../core/auth/authentication/presentation/providers/auth_provider.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widget/app_components.dart';
@@ -36,10 +36,10 @@ class HomePage extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.task_alt_rounded,
                   size: 72,
-                  color: AppColors.primary,
+                  color: context.colors.primary,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/core/design_system/theme/app_palette.dart';
 
-import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
-import '../../constants/app_typography.dart';
 
 /// Reusable linear progress indicator with optional label and percentage.
 class AppProgress extends StatelessWidget {
@@ -44,15 +43,15 @@ class AppProgress extends StatelessWidget {
                 if (label != null)
                   Text(
                     label!,
-                    style: AppTypography.labelMedium.copyWith(
-                      color: AppColors.textPrimary,
+                    style: context.typography.labelMedium.copyWith(
+                      color: context.colors.textPrimary,
                     ),
                   ),
                 if (showPercentage)
                   Text(
                     percentText,
-                    style: AppTypography.labelMedium.copyWith(
-                      color: AppColors.textSecondary,
+                    style: context.typography.labelMedium.copyWith(
+                      color: context.colors.textSecondary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -65,8 +64,8 @@ class AppProgress extends StatelessWidget {
             child: LinearProgressIndicator(
               value: clampedValue,
               minHeight: height,
-              color: color ?? AppColors.primary,
-              backgroundColor: backgroundColor ?? AppColors.surfaceVariant,
+              color: color ?? context.colors.primary,
+              backgroundColor: backgroundColor ?? context.colors.surfaceVariant,
             ),
           ),
         ],
