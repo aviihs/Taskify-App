@@ -1,4 +1,4 @@
-package com.example.taskify_app
+package com.Shivataskifu.app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
